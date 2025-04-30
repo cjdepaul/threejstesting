@@ -2,48 +2,44 @@ function main() {
     const canvas = document.querySelector('#c');
     const renderer = new THREE.WebGLRenderer({antialias: true, canvas});
     renderer.setSize(window.innerWidth, window.innerHeight);
-    //camera 
-    const fov = 75; 
-    const aspect = 2;  
-    const near = 0.1; 
-    const far = 5; 
-    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.z = 2;
-
-    //scene
-    const scene = new THREE.Scene();
-
-    const boxWidth = 1;
-    const boxHeight = 1;
-    const boxDepth = 1;
-    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-
-
-    const material = new THREE.MeshPhongMaterial({color: 0x44aa88});
-
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-
-    renderer.render(scene, camera);
-
-    function render(time) {
-        time *= 0.001;  // convert time to seconds
-       
-        cube.rotation.x = time;
-        cube.rotation.y = time;
-       
-        renderer.render(scene, camera);
-       
-        requestAnimationFrame(render);
-      }
     
-    requestAnimationFrame(render);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 300;
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
 
-    const color = 0xFFFFFF;
-    const intensity = 2;
-    const light = new THREE.DirectionalLight(color, intensity);
-    light.position.set(-1, 2, 4);
-    scene.add(light);
+
+    let sunradius = 50;
+    const sunGeometrySphere = new THREE.SphereGeometry(sunradius, 32, 32);
+
+    const sunMaterialSphere = new THREE.MeshBasicMaterial({color: 0xffff00, wireframe: false});
+
+    const sun = new THREE.Mesh(sunGeometrySphere, sunMaterialSphere);
+    sun.position.set(0, 0, 0);
+    
+    const sunLight = new THREE.PointLight(0xf2ff00, 2, 100);
+    sunLight.position.set(0, 0, 0);
+    
+  
+    function render(time) {
+      time *= 0.001;  // convert to seconds
+
+      sun.rotation.x = time;
+      sun.rotation.y = time;
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
+
+
+    
+    scene.add(sunLight);
+    scene.add(sun);
+    renderer.render(scene, camera);
+    
+
 
 }
 
