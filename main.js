@@ -69,7 +69,7 @@ function main() {
     });
 
 
-    // Geometries
+    // Planet Geometries
     const sunGeometrySphere = new THREE.SphereGeometry(50, 32, 32);
     const mecuryGeometrySphere = new THREE.SphereGeometry(1, 32, 32);
     const venusGeometrySphere = new THREE.SphereGeometry(2.5, 32, 32);
@@ -80,6 +80,17 @@ function main() {
     const saturnGeometrySphere = new THREE.SphereGeometry(8.5, 32, 32);
     const uranusGeometrySphere = new THREE.SphereGeometry(4, 32, 32);
     const neptuneGeometrySphere = new THREE.SphereGeometry(3.5, 32, 32);
+
+    // Orbit Geometries
+    const mercuryOrbitRing = new THREE.RingGeometry(80, 80.3, 64);
+    const venusOrbitRing = new THREE.RingGeometry(120, 120.3, 64);
+    const earthOrbitRing = new THREE.RingGeometry(160, 160.3, 64);
+    const moonOrbitRing = new THREE.RingGeometry(10, 10.3, 64);
+    const marsOrbitRing = new THREE.RingGeometry(200, 200.3, 64);
+    const jupiterOrbitRing = new THREE.RingGeometry(240, 240.3, 64);
+    const saturnOrbitRing = new THREE.RingGeometry(280, 280.3, 64);
+    const uranusOrbitRing = new THREE.RingGeometry(320, 320.3, 64);
+    const neptuneOrbitRing = new THREE.RingGeometry(340, 340.3, 64);
 
     // Textures
     const sunTexture = new THREE.TextureLoader().load('images/sun.jpg');
@@ -93,7 +104,7 @@ function main() {
     const uranusTexture = new THREE.TextureLoader().load('images/uranus.jpg');
     const neptuneTexture = new THREE.TextureLoader().load('images/neptune.jpg');
 
-    // Materials
+    // Planet Materials
     const sunMaterialSphere = new THREE.MeshBasicMaterial({map: sunTexture});
     const mercuryMaterialSphere = new THREE.MeshPhysicalMaterial({map: mercuryTexture});
     const venusMaterialSphere = new THREE.MeshPhysicalMaterial({map: venusTexture});
@@ -104,6 +115,19 @@ function main() {
     const saturnMaterialSphere = new THREE.MeshPhysicalMaterial({map: saturnTexture});
     const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({map: uranusTexture});
     const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({map: neptuneTexture});
+
+
+
+    // Orbit Materials
+    const mercuryOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const venusOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const earthOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const moonOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const marsOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const jupiterOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const saturnOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const uranusOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const neptuneOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 
     // Meshes
     const sun = new THREE.Mesh(sunGeometrySphere, sunMaterialSphere);
@@ -162,6 +186,34 @@ function main() {
     neptune.castShadow = true;
     neptune.receiveShadow = true;
 
+    const mercuryOrbit = new THREE.Mesh(mercuryOrbitRing, mercuryOrbitMaterial);
+    mercuryOrbit.rotation.x = Math.PI / 2;
+
+    const venusOrbit = new THREE.Mesh(venusOrbitRing, venusOrbitMaterial);
+    venusOrbit.rotation.x = Math.PI / 2;
+
+    const earthOrbit = new THREE.Mesh(earthOrbitRing, earthOrbitMaterial);
+    earthOrbit.rotation.x = Math.PI / 2;
+
+    const moonOrbit = new THREE.Mesh(moonOrbitRing, moonOrbitMaterial);
+    moonOrbit.rotation.x = Math.PI / 2;
+
+    const marsOrbit = new THREE.Mesh(marsOrbitRing, marsOrbitMaterial);
+    marsOrbit.rotation.x = Math.PI / 2;
+
+    const jupiterOrbit = new THREE.Mesh(jupiterOrbitRing, jupiterOrbitMaterial);
+    jupiterOrbit.rotation.x = Math.PI / 2;
+
+    const saturnOrbit = new THREE.Mesh(saturnOrbitRing, saturnOrbitMaterial);
+    saturnOrbit.rotation.x = Math.PI / 2;
+
+    const uranusOrbit = new THREE.Mesh(uranusOrbitRing, uranusOrbitMaterial);
+    uranusOrbit.rotation.x = Math.PI / 2;
+
+    const neptuneOrbit = new THREE.Mesh(neptuneOrbitRing, neptuneOrbitMaterial);
+    neptuneOrbit.rotation.x = Math.PI / 2;
+    
+
     // Orbits 
 
     const mercuryPivot = new THREE.Object3D();
@@ -177,6 +229,7 @@ function main() {
     scene.add(venusPivot);
     scene.add(earthPivot);
     earth.add(moonPivot);
+    earth.add(moonOrbit);
     moonPivot.add(moon);
     scene.add(marsPivot);
     scene.add(jupiterPivot);
@@ -224,6 +277,14 @@ function main() {
     }
     animate();
 
+    scene.add(mercuryOrbit);
+    scene.add(venusOrbit);
+    scene.add(earthOrbit);
+    scene.add(marsOrbit);
+    scene.add(jupiterOrbit);
+    scene.add(saturnOrbit);
+    scene.add(uranusOrbit);
+    scene.add(neptuneOrbit);
     scene.add(sunLight);
     scene.add(sun);
     renderer.render(scene, camera);
