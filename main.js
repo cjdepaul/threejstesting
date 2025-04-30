@@ -19,6 +19,7 @@ function main() {
     const mecuryGeometrySphere = new THREE.SphereGeometry(1, 32, 32);
     const venusGeometrySphere = new THREE.SphereGeometry(2.5, 32, 32);
     const earthGeometrySphere = new THREE.SphereGeometry(3, 32, 32);
+    const moonGeometrySphere = new THREE.SphereGeometry(1, 32, 32);
     const marsGeometrySphere = new THREE.SphereGeometry(1.5, 32, 32);
     const jupiterGeometrySphere = new THREE.SphereGeometry(10, 32, 32);
     const saturnGeometrySphere = new THREE.SphereGeometry(8.5, 32, 32);
@@ -30,6 +31,7 @@ function main() {
     const mercuryMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xaaaaaa});
     const venusMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xffa500});
     const earthMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x006400});
+    const moonMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x808080});
     const marsMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xff0000});
     const jupiterMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xffa500});
     const saturnMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x8b4513});
@@ -63,6 +65,11 @@ function main() {
     earth.castShadow = true;
     earth.receiveShadow = true;
 
+    const moon = new THREE.Mesh(moonGeometrySphere, moonMaterialSphere);
+    moon.position.set(10, 0, 0);
+    moon.castShadow = true;
+    moon.receiveShadow = true;
+
     const mars = new THREE.Mesh(marsGeometrySphere, marsMaterialSphere);
     mars.position.set(200, 0, 0);
     mars.castShadow = true;
@@ -93,6 +100,7 @@ function main() {
     const mercuryPivot = new THREE.Object3D();
     const venusPivot = new THREE.Object3D();
     const earthPivot = new THREE.Object3D();
+    const moonPivot = new THREE.Object3D();
     const marsPivot = new THREE.Object3D();
     const jupiterPivot = new THREE.Object3D();
     const saturnPivot = new THREE.Object3D();
@@ -101,6 +109,8 @@ function main() {
     scene.add(mercuryPivot);
     scene.add(venusPivot);
     scene.add(earthPivot);
+    earth.add(moonPivot);
+    moonPivot.add(moon);
     scene.add(marsPivot);
     scene.add(jupiterPivot);
     scene.add(saturnPivot);
@@ -125,6 +135,7 @@ function main() {
       saturn: 0.00818,
       uranus: 0.00287,
       neptune: 0.00146,
+      moon: 0.5
     };
 
     function animate() {
@@ -135,6 +146,7 @@ function main() {
       mercuryPivot.rotation.y += orbitalSpeeds.mercury * 0.01;
       venusPivot.rotation.y += orbitalSpeeds.venus * 0.01;
       earthPivot.rotation.y += orbitalSpeeds.earth * 0.01;
+      moonPivot.rotation.y += orbitalSpeeds.moon * 0.01;
       marsPivot.rotation.y += orbitalSpeeds.mars * 0.01;
       jupiterPivot.rotation.y += orbitalSpeeds.jupiter * 0.01;
       saturnPivot.rotation.y += orbitalSpeeds.saturn * 0.01;
