@@ -13,6 +13,61 @@ function main() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000);
 
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+
+    document.addEventListener('mousedown', (event) => {
+      if (event.button === 0) { // Left mouse button
+        isDragging = true;
+        previousMousePosition = {
+          x: event.clientX,
+          y: event.clientY
+        };
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    document.addEventListener('mousemove', (event) => {
+      if (isDragging) {
+        const deltaMove = {
+          x: event.clientX - previousMousePosition.x,
+          y: event.clientY - previousMousePosition.y
+        };
+
+        camera.rotation.y -= deltaMove.x * 0.01;
+        camera.rotation.x -= deltaMove.y * 0.01;
+
+        previousMousePosition = {
+          x: event.clientX,
+          y: event.clientY
+        };
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      const speed = 5;
+      const direction = new THREE.Vector3();
+      camera.getWorldDirection(direction);
+
+      switch(event.key.toLowerCase()) {
+        case 'w':
+          camera.position.addScaledVector(direction, speed);
+          break;
+        case 's':
+          camera.position.addScaledVector(direction, -speed);
+          break;
+        case 'a':
+          camera.position.x -= speed;
+          break;
+        case 'd':
+          camera.position.x += speed;
+          break;
+      }
+    });
+
 
     // Geometries
     const sunGeometrySphere = new THREE.SphereGeometry(50, 32, 32);
