@@ -2,6 +2,8 @@ function main() {
     const canvas = document.querySelector('#c');
     const renderer = new THREE.WebGLRenderer({antialias: true, canvas});
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 400;
@@ -14,10 +16,14 @@ function main() {
 
     // Geometries
     const sunGeometrySphere = new THREE.SphereGeometry(50, 32, 32);
-    const mecuryGeometrySphere = new THREE.SphereGeometry(5, 32, 32);
-    const venusGeometrySphere = new THREE.SphereGeometry(10, 32, 32);
-    const earthGeometrySphere = new THREE.SphereGeometry(10, 32, 32);
-    const marsGeometrySphere = new THREE.SphereGeometry(10, 32, 32);
+    const mecuryGeometrySphere = new THREE.SphereGeometry(1, 32, 32);
+    const venusGeometrySphere = new THREE.SphereGeometry(2.5, 32, 32);
+    const earthGeometrySphere = new THREE.SphereGeometry(3, 32, 32);
+    const marsGeometrySphere = new THREE.SphereGeometry(1.5, 32, 32);
+    const jupiterGeometrySphere = new THREE.SphereGeometry(10, 32, 32);
+    const saturnGeometrySphere = new THREE.SphereGeometry(8.5, 32, 32);
+    const uranusGeometrySphere = new THREE.SphereGeometry(4, 32, 32);
+    const neptuneGeometrySphere = new THREE.SphereGeometry(3.5, 32, 32);
 
     // Materials
     const sunMaterialSphere = new THREE.MeshBasicMaterial({color: 0xffff00});
@@ -25,26 +31,62 @@ function main() {
     const venusMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xffa500});
     const earthMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x006400});
     const marsMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xff0000});
+    const jupiterMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xffa500});
+    const saturnMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x8b4513});
+    const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x87CEEB});
+    const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x000080});
 
     // Meshes
     const sun = new THREE.Mesh(sunGeometrySphere, sunMaterialSphere);
     sun.position.set(0, 0, 0);
-    const sunLight = new THREE.PointLight(0xf2ff00, 2, 10000);
+    const sunLight = new THREE.PointLight(0xffffff, 2, 10000);
     sunLight.position.set(0, 0, 0);
+    sunLight.castShadow = true;
+    sunLight.shadow.mapSize.width = 1024;
+    sunLight.shadow.mapSize.height = 1024;
+    sunLight.shadow.camera.near = 1;
+    sunLight.shadow.camera.far = 2000;
     
 
     const mercury = new THREE.Mesh(mecuryGeometrySphere, mercuryMaterialSphere);
     mercury.position.set(80, 0, 0);
+    mercury.castShadow = true;
+    mercury.receiveShadow = true;
   
     const venus = new THREE.Mesh(venusGeometrySphere, venusMaterialSphere);
     venus.position.set(120, 0, 0);
+    venus.castShadow = true;
+    venus.receiveShadow = true;
 
     const earth = new THREE.Mesh(earthGeometrySphere, earthMaterialSphere);
     earth.position.set(160, 0, 0);
+    earth.castShadow = true;
+    earth.receiveShadow = true;
 
     const mars = new THREE.Mesh(marsGeometrySphere, marsMaterialSphere);
     mars.position.set(200, 0, 0);
+    mars.castShadow = true;
+    mars.receiveShadow = true;
 
+    const jupiter = new THREE.Mesh(jupiterGeometrySphere, jupiterMaterialSphere);
+    jupiter.position.set(240, 0, 0);
+    jupiter.castShadow = true;
+    jupiter.receiveShadow = true;
+
+    const saturn = new THREE.Mesh(saturnGeometrySphere, saturnMaterialSphere);
+    saturn.position.set(280, 0, 0);
+    saturn.castShadow = true;
+    saturn.receiveShadow = true;
+
+    const uranus = new THREE.Mesh(uranusGeometrySphere, uranusMaterialSphere);
+    uranus.position.set(320, 0, 0);
+    uranus.castShadow = true;
+    uranus.receiveShadow = true;
+
+    const neptune = new THREE.Mesh(neptuneGeometrySphere, neptuneMaterialSphere);
+    neptune.position.set(340, 0, 0);
+    neptune.castShadow = true;
+    neptune.receiveShadow = true;
 
     // Orbits 
 
@@ -52,14 +94,26 @@ function main() {
     const venusPivot = new THREE.Object3D();
     const earthPivot = new THREE.Object3D();
     const marsPivot = new THREE.Object3D();
+    const jupiterPivot = new THREE.Object3D();
+    const saturnPivot = new THREE.Object3D();
+    const uranusPivot = new THREE.Object3D();
+    const neptunePivot = new THREE.Object3D();
     scene.add(mercuryPivot);
     scene.add(venusPivot);
     scene.add(earthPivot);
     scene.add(marsPivot);
+    scene.add(jupiterPivot);
+    scene.add(saturnPivot);
+    scene.add(uranusPivot);
+    scene.add(neptunePivot);
     mercuryPivot.add(mercury);
     venusPivot.add(venus);
     earthPivot.add(earth);
     marsPivot.add(mars);
+    jupiterPivot.add(jupiter);
+    saturnPivot.add(saturn);
+    uranusPivot.add(uranus);
+    neptunePivot.add(neptune);
 
 
     const orbitalSpeeds = {
@@ -76,28 +130,20 @@ function main() {
     function animate() {
       requestAnimationFrame(animate);
 
+      sun.rotation.y += 0.001;
+
       mercuryPivot.rotation.y += orbitalSpeeds.mercury * 0.01;
       venusPivot.rotation.y += orbitalSpeeds.venus * 0.01;
       earthPivot.rotation.y += orbitalSpeeds.earth * 0.01;
       marsPivot.rotation.y += orbitalSpeeds.mars * 0.01;
+      jupiterPivot.rotation.y += orbitalSpeeds.jupiter * 0.01;
+      saturnPivot.rotation.y += orbitalSpeeds.saturn * 0.01;
+      uranusPivot.rotation.y += orbitalSpeeds.uranus * 0.01;
+      neptunePivot.rotation.y += orbitalSpeeds.neptune * 0.01;
     
       renderer.render(scene, camera);
     }
     animate();
-
-
-    function render(time) {
-      time *= 0.001;  // convert to seconds
-
-      sun.rotation.x = time;
-      sun.rotation.y = time;
-
-      renderer.render(scene, camera);
-      requestAnimationFrame(render);
-  }
-
-  requestAnimationFrame(render);
-
 
     scene.add(sunLight);
     scene.add(sun);
