@@ -26,17 +26,29 @@ function main() {
     const uranusGeometrySphere = new THREE.SphereGeometry(4, 32, 32);
     const neptuneGeometrySphere = new THREE.SphereGeometry(3.5, 32, 32);
 
+    // Textures
+    const sunTexture = new THREE.TextureLoader().load('images/sun.jpg');
+    const mercuryTexture = new THREE.TextureLoader().load('images/mercury.jpg');
+    const venusTexture = new THREE.TextureLoader().load('images/venus.jpg');
+    const earthTexture = new THREE.TextureLoader().load('images/earth.jpg');
+    const moonTexture = new THREE.TextureLoader().load('images/moon.jpg');
+    const marsTexture = new THREE.TextureLoader().load('images/mars.jpg');
+    const jupiterTexture = new THREE.TextureLoader().load('images/jupiter.jpg');
+    const saturnTexture = new THREE.TextureLoader().load('images/saturn.jpg');
+    const uranusTexture = new THREE.TextureLoader().load('images/uranus.jpg');
+    const neptuneTexture = new THREE.TextureLoader().load('images/neptune.jpg');
+
     // Materials
-    const sunMaterialSphere = new THREE.MeshBasicMaterial({color: 0xffff00});
-    const mercuryMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xaaaaaa});
-    const venusMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xffa500});
-    const earthMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x006400});
-    const moonMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x808080});
-    const marsMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xff0000});
-    const jupiterMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0xffa500});
-    const saturnMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x8b4513});
-    const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x87CEEB});
-    const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({color: 0x000080});
+    const sunMaterialSphere = new THREE.MeshBasicMaterial({map: sunTexture});
+    const mercuryMaterialSphere = new THREE.MeshPhysicalMaterial({map: mercuryTexture});
+    const venusMaterialSphere = new THREE.MeshPhysicalMaterial({map: venusTexture});
+    const earthMaterialSphere = new THREE.MeshPhysicalMaterial({map: earthTexture});
+    const moonMaterialSphere = new THREE.MeshPhysicalMaterial({map: moonTexture});
+    const marsMaterialSphere = new THREE.MeshPhysicalMaterial({map: marsTexture});
+    const jupiterMaterialSphere = new THREE.MeshPhysicalMaterial({map: jupiterTexture});
+    const saturnMaterialSphere = new THREE.MeshPhysicalMaterial({map: saturnTexture});
+    const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({map: uranusTexture});
+    const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({map: neptuneTexture});
 
     // Meshes
     const sun = new THREE.Mesh(sunGeometrySphere, sunMaterialSphere);
