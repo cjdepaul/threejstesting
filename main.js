@@ -65,8 +65,14 @@ function main() {
         case 'd':
           camera.position.x += speed;
           break;
+        case 'arrowup':
+          camera.position.y += speed;
+          break;
+        case 'arrowdown':
+          camera.position.y -= speed;
+          break;
       }
-    });
+        });
 
 
     // Planet Geometries
@@ -78,6 +84,7 @@ function main() {
     const marsGeometrySphere = new THREE.SphereGeometry(1.5, 32, 32);
     const jupiterGeometrySphere = new THREE.SphereGeometry(10, 32, 32);
     const saturnGeometrySphere = new THREE.SphereGeometry(8.5, 32, 32);
+    const saturnRingGeometry = new THREE.RingGeometry(13, 16, 32);
     const uranusGeometrySphere = new THREE.SphereGeometry(4, 32, 32);
     const neptuneGeometrySphere = new THREE.SphereGeometry(3.5, 32, 32);
 
@@ -101,6 +108,7 @@ function main() {
     const marsTexture = new THREE.TextureLoader().load('images/mars.jpg');
     const jupiterTexture = new THREE.TextureLoader().load('images/jupiter.jpg');
     const saturnTexture = new THREE.TextureLoader().load('images/saturn.jpg');
+    const saturnRingTexture = new THREE.TextureLoader().load('images/saturnsrings.png');
     const uranusTexture = new THREE.TextureLoader().load('images/uranus.jpg');
     const neptuneTexture = new THREE.TextureLoader().load('images/neptune.jpg');
 
@@ -113,6 +121,7 @@ function main() {
     const marsMaterialSphere = new THREE.MeshPhysicalMaterial({map: marsTexture});
     const jupiterMaterialSphere = new THREE.MeshPhysicalMaterial({map: jupiterTexture});
     const saturnMaterialSphere = new THREE.MeshPhysicalMaterial({map: saturnTexture});
+    const saturnRingMaterial = new THREE.MeshStandardMaterial({map: saturnRingTexture, side: THREE.DoubleSide});
     const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({map: uranusTexture});
     const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({map: neptuneTexture});
 
@@ -175,6 +184,11 @@ function main() {
     saturn.position.set(280, 0, 0);
     saturn.castShadow = true;
     saturn.receiveShadow = true;
+
+    const saturnRing = new THREE.Mesh(saturnRingGeometry, saturnRingMaterial);
+    saturnRing.rotation.x = Math.PI / 2;
+    saturnRing.position.set(280, 0, 0);
+
 
     const uranus = new THREE.Mesh(uranusGeometrySphere, uranusMaterialSphere);
     uranus.position.set(320, 0, 0);
@@ -242,6 +256,7 @@ function main() {
     marsPivot.add(mars);
     jupiterPivot.add(jupiter);
     saturnPivot.add(saturn);
+    saturnPivot.add(saturnRing);
     uranusPivot.add(uranus);
     neptunePivot.add(neptune);
 
@@ -263,7 +278,8 @@ function main() {
 
       sun.rotation.y += 0.001;
 
-      mercuryPivot.rotation.y += orbitalSpeeds.mercury * 0.01;
+      // adds orbits to the planets
+      mercuryPivot.rotation.y += orbitalSpeeds.mercury * 0.001;
       venusPivot.rotation.y += orbitalSpeeds.venus * 0.01;
       earthPivot.rotation.y += orbitalSpeeds.earth * 0.01;
       moonPivot.rotation.y += orbitalSpeeds.moon * 0.01;
@@ -272,6 +288,18 @@ function main() {
       saturnPivot.rotation.y += orbitalSpeeds.saturn * 0.01;
       uranusPivot.rotation.y += orbitalSpeeds.uranus * 0.01;
       neptunePivot.rotation.y += orbitalSpeeds.neptune * 0.01;
+
+      // adds rotation to the planets
+      const speedSlower = 4
+      mercury.rotation.y += 0.0059 / speedSlower;  
+      venus.rotation.y -= 0.0014 / speedSlower;    
+      earth.rotation.y += 0.02 / speedSlower;      
+      moon.rotation.y += (orbitalSpeeds.moon * 0.01) / speedSlower;; 
+      mars.rotation.y += 0.0097 / speedSlower;     
+      jupiter.rotation.y += 0.024 / speedSlower;    
+      saturn.rotation.y += 0.022 / speedSlower;    
+      uranus.rotation.y += 0.017 / speedSlower;     
+      neptune.rotation.y += 0.018 / speedSlower;    
     
       renderer.render(scene, camera);
     }
