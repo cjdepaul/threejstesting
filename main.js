@@ -121,7 +121,7 @@ function main() {
     const marsMaterialSphere = new THREE.MeshPhysicalMaterial({map: marsTexture});
     const jupiterMaterialSphere = new THREE.MeshPhysicalMaterial({map: jupiterTexture});
     const saturnMaterialSphere = new THREE.MeshPhysicalMaterial({map: saturnTexture});
-    const saturnRingMaterial = new THREE.MeshStandardMaterial({map: saturnRingTexture, side: THREE.DoubleSide});
+    const saturnRingMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
     const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({map: uranusTexture});
     const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({map: neptuneTexture});
 
