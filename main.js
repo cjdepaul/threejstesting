@@ -279,15 +279,16 @@ function main() {
       sun.rotation.y += 0.001;
 
       // adds orbits to the planets
-      mercuryPivot.rotation.y += orbitalSpeeds.mercury * 0.001;
-      venusPivot.rotation.y += orbitalSpeeds.venus * 0.01;
-      earthPivot.rotation.y += orbitalSpeeds.earth * 0.01;
-      moonPivot.rotation.y += orbitalSpeeds.moon * 0.01;
-      marsPivot.rotation.y += orbitalSpeeds.mars * 0.01;
-      jupiterPivot.rotation.y += orbitalSpeeds.jupiter * 0.01;
-      saturnPivot.rotation.y += orbitalSpeeds.saturn * 0.01;
-      uranusPivot.rotation.y += orbitalSpeeds.uranus * 0.01;
-      neptunePivot.rotation.y += orbitalSpeeds.neptune * 0.01;
+      const speedOrbit = 0.01;
+      mercuryPivot.rotation.y += orbitalSpeeds.mercury * speedOrbit;
+      venusPivot.rotation.y += orbitalSpeeds.venus * speedOrbit;
+      earthPivot.rotation.y += orbitalSpeeds.earth * speedOrbit;
+      moonPivot.rotation.y += orbitalSpeeds.moon * speedOrbit;
+      marsPivot.rotation.y += orbitalSpeeds.mars * speedOrbit;
+      jupiterPivot.rotation.y += orbitalSpeeds.jupiter * speedOrbit;
+      saturnPivot.rotation.y += orbitalSpeeds.saturn * speedOrbit;
+      uranusPivot.rotation.y += orbitalSpeeds.uranus * speedOrbit;
+      neptunePivot.rotation.y += orbitalSpeeds.neptune * speedOrbit;
 
       // adds rotation to the planets
       const speedSlower = 4
