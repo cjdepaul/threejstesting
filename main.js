@@ -9,7 +9,6 @@ function main() {
     camera.position.z = 400;
     camera.position.y = 200;
     camera.position.x = 0;
-    camera.lookAt(0, 0, 0);
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000);
 
@@ -84,7 +83,15 @@ function main() {
     const marsGeometrySphere = new THREE.SphereGeometry(1.5, 32, 32);
     const jupiterGeometrySphere = new THREE.SphereGeometry(10, 32, 32);
     const saturnGeometrySphere = new THREE.SphereGeometry(8.5, 32, 32);
-    const saturnRingGeometry = new THREE.RingGeometry(13, 16, 32);
+    const saturnRingGeometry = new THREE.RingBufferGeometry(11, 14, 64);
+    var pos = saturnRingGeometry.attributes.position;
+    var v3 = new THREE.Vector3();
+    for (let i = 0; i < pos.count; i++) {
+        v3.fromBufferAttribute(pos, i);
+        const u = (v3.length() - 11) / (14 - 11); // normalize radius to 0-1
+        const v = (i % 2); // alternate between 0 and 1 for inner/outer edge
+        saturnRingGeometry.attributes.uv.setXY(i, u, v);
+    }
     const uranusGeometrySphere = new THREE.SphereGeometry(4, 32, 32);
     const neptuneGeometrySphere = new THREE.SphereGeometry(3.5, 32, 32);
 
@@ -121,7 +128,11 @@ function main() {
     const marsMaterialSphere = new THREE.MeshPhysicalMaterial({map: marsTexture});
     const jupiterMaterialSphere = new THREE.MeshPhysicalMaterial({map: jupiterTexture});
     const saturnMaterialSphere = new THREE.MeshPhysicalMaterial({map: saturnTexture});
-    const saturnRingMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    const saturnRingMaterial = new THREE.MeshPhysicalMaterial({
+        map: saturnRingTexture, 
+        side: THREE.DoubleSide,
+        transparent: true
+    });
     const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({map: uranusTexture});
     const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({map: neptuneTexture});
 
@@ -187,7 +198,9 @@ function main() {
 
     const saturnRing = new THREE.Mesh(saturnRingGeometry, saturnRingMaterial);
     saturnRing.rotation.x = Math.PI / 2;
+    saturnRing.rotation.y =  0.25;
     saturnRing.position.set(280, 0, 0);
+    saturnRing.receiveShadow = true;
 
 
     const uranus = new THREE.Mesh(uranusGeometrySphere, uranusMaterialSphere);
