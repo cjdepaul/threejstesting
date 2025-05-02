@@ -254,7 +254,7 @@ function main() {
     earthOrbit.rotation.x = Math.PI / 2;
 
     const moonOrbit = new THREE.Mesh(moonOrbitRing, moonOrbitMaterial);
-    moonOrbit.rotation.x = Math.PI / 2;
+    moonOrbit.rotation.x = Math.PI / 2; 
 
     const marsOrbit = new THREE.Mesh(marsOrbitRing, marsOrbitMaterial);
     marsOrbit.rotation.x = Math.PI / 2;
@@ -283,6 +283,8 @@ function main() {
     const venusPivot = new THREE.Object3D();
     const earthPivot = new THREE.Object3D();
     const moonPivot = new THREE.Object3D();
+    const moonSystem = new THREE.Object3D();
+    moonSystem.rotation.x = Math.PI * 0.028; 
     const marsPivot = new THREE.Object3D();
     const jupiterPivot = new THREE.Object3D();
     const saturnPivot = new THREE.Object3D();
@@ -292,8 +294,9 @@ function main() {
     scene.add(mercuryPivot);
     scene.add(venusPivot);
     scene.add(earthPivot);
-    earth.add(moonPivot);
-    earth.add(moonOrbit);
+    earth.add(moonSystem);
+    moonSystem.add(moonOrbit);
+    moonSystem.add(moonPivot);
     moonPivot.add(moon);
     scene.add(marsPivot);
     scene.add(jupiterPivot);
