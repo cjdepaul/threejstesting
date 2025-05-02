@@ -93,6 +93,15 @@ function main() {
         saturnRingGeometry.attributes.uv.setXY(i, u, v);
     }
     const uranusGeometrySphere = new THREE.SphereGeometry(4, 32, 32);
+    const uranusRingGeometry = new THREE.RingBufferGeometry(5, 6, 64);
+    var pos = uranusRingGeometry.attributes.position;
+    var v3 = new THREE.Vector3();
+    for (let i = 0; i < pos.count; i++) {
+        v3.fromBufferAttribute(pos, i);
+        const u = (v3.length() - 5) / (6 - 5); // normalize radius to 0-1
+        const v = (i % 2); // alternate between 0 and 1 for inner/outer edge
+        uranusRingGeometry.attributes.uv.setXY(i, u, v);
+    }
     const neptuneGeometrySphere = new THREE.SphereGeometry(3.5, 32, 32);
 
     // Orbit Geometries
@@ -117,6 +126,7 @@ function main() {
     const saturnTexture = new THREE.TextureLoader().load('images/saturn.jpg');
     const saturnRingTexture = new THREE.TextureLoader().load('images/saturnsrings.png');
     const uranusTexture = new THREE.TextureLoader().load('images/uranus.jpg');
+    const uranusRingTexture = new THREE.TextureLoader().load('images/uranusrings.png');
     const neptuneTexture = new THREE.TextureLoader().load('images/neptune.jpg');
 
     // Planet Materials
@@ -134,6 +144,11 @@ function main() {
         transparent: true
     });
     const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({map: uranusTexture});
+    const uranusRingMaterial = new THREE.MeshPhysicalMaterial({
+        map: uranusRingTexture,
+        side: THREE.DoubleSide,
+        transparent: true
+    });
     const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({map: neptuneTexture});
 
 
@@ -208,6 +223,12 @@ function main() {
     uranus.castShadow = true;
     uranus.receiveShadow = true;
 
+    const uranusRing = new THREE.Mesh(uranusRingGeometry, uranusRingMaterial);
+    uranusRing.rotation.x = Math.PI / 2;
+    uranusRing.rotation.y = 2;
+    uranusRing.position.set(320, 0, 0);
+    uranusRing.receiveShadow = true;
+
     const neptune = new THREE.Mesh(neptuneGeometrySphere, neptuneMaterialSphere);
     neptune.position.set(340, 0, 0);
     neptune.castShadow = true;
@@ -271,6 +292,7 @@ function main() {
     saturnPivot.add(saturn);
     saturnPivot.add(saturnRing);
     uranusPivot.add(uranus);
+    uranusPivot.add(uranusRing);
     neptunePivot.add(neptune);
 
 
