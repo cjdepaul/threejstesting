@@ -1,3 +1,7 @@
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const canvas = document.querySelector('#c');
 const renderer = new THREE.WebGLRenderer({antialias: true, canvas});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -58,7 +62,7 @@ document.addEventListener('mousemove', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  const speed = 200;
+  const speed = 150;
   const direction = new THREE.Vector3();
   camera.getWorldDirection(direction);
 
@@ -318,6 +322,18 @@ uranusPivot.add(uranus);
 uranusPivot.add(uranusRing);
 neptunePivot.add(neptune);
 plutoPivot.add(pluto);
+
+mercuryPivot.rotation.y += randomInt(0, 360);
+venusPivot.rotation.y += randomInt(0, 360);
+earthPivot.rotation.y += randomInt(0, 360);
+moonPivot.rotation.y += randomInt(0, 360);
+marsPivot.rotation.y += randomInt(0, 360);
+jupiterPivot.rotation.y += randomInt(0, 360);
+saturnPivot.rotation.y += randomInt(0, 360);
+uranusPivot.rotation.y += randomInt(0, 360);
+neptunePivot.rotation.y += randomInt(0, 360);
+plutoPivot.rotation.y += randomInt(0, 360);
+
 
 const orbitalSpeeds = {
   mercury: 1,

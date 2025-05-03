@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup button handlers
     document.querySelectorAll('.goto-button').forEach(button => {
         button.addEventListener('click', function(e) {
+            stopFollowing();
             const celestialName = e.target.closest('.celestial-item')
                                         .querySelector('.celestial-name').textContent.toLowerCase();
             const celestialBody = celestialBodies[celestialName];
