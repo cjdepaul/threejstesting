@@ -37,9 +37,10 @@ function main() {
           x: event.clientX - previousMousePosition.x,
           y: event.clientY - previousMousePosition.y
         };
-    
-        yaw -= deltaMove.x * 0.005;
-        pitch -= deltaMove.y * 0.005;
+        
+        const sensitivity = 0.0075;
+        yaw -= deltaMove.x * sensitivity;
+        pitch -= deltaMove.y * sensitivity;
     
         // Clamp pitch to prevent flipping
         const maxPitch = Math.PI / 2 - 0.01;
