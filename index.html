@@ -18,11 +18,17 @@
 				<div class="section-content" id="movementSettingsContent">
 					<div class="menu-item">
 						<span class="menu-name">Speed</span>
-						<input type="range" id="speed" min="0" max="500" value="50" step="1">
+						<div class="slider-container">
+							<input type="range" id="speed" min="0" max="500" value="50" step="5">
+							<span class="slider-value" id="speed-value">50</span>
+						</div>
 					</div>
 					<div class="menu-item">
 						<span class="menu-name">Camera Sensitivity</span>
-						<input type="range" id="camera-sensitivity" min="0" max="100" value="50" step="1">
+						<div class="slider-container">
+							<input type="range" id="camera-sensitivity" min="0" max="100" value="50" step="1">
+							<span class="slider-value" id="sensitivity-value">50</span>
+						</div>
 					</div>
 				</div>
 			</div>

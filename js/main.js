@@ -2,6 +2,9 @@ function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+let currentSpeed = 50;
+let currentSensitivity = 50;
+
 const canvas = document.querySelector('#c');
 const renderer = new THREE.WebGLRenderer({antialias: true, canvas});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -54,7 +57,7 @@ document.addEventListener('mousemove', (event) => {
       y: event.clientY - previousMousePosition.y
     };
     
-    const sensitivity = 0.0075;
+    const sensitivity = (currentSensitivity / 5000); // Scale down the sensitivity
     yaw -= deltaMove.x * sensitivity;
     pitch -= deltaMove.y * sensitivity;
 
@@ -74,31 +77,30 @@ document.addEventListener('mousemove', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  const speed =50;
   const direction = new THREE.Vector3();
   camera.getWorldDirection(direction);
 
   switch(event.key.toLowerCase()) {
     case 'w':
-      camera.position.addScaledVector(direction, speed);
+      camera.position.addScaledVector(direction, currentSpeed);
       break;
     case 's':
-      camera.position.addScaledVector(direction, -speed);
+      camera.position.addScaledVector(direction, -currentSpeed);
       break;
     case 'a':
-      camera.position.addScaledVector(direction.cross(new THREE.Vector3(0, 1, 0)), -speed);
+      camera.position.addScaledVector(direction.cross(new THREE.Vector3(0, 1, 0)), -currentSpeed);
       break;
     case 'd':
-      camera.position.addScaledVector(direction.cross(new THREE.Vector3(0, 1, 0)), speed);
+      camera.position.addScaledVector(direction.cross(new THREE.Vector3(0, 1, 0)), currentSpeed);
       break;
     case ' ':
-      camera.position.y += speed;
+      camera.position.y += currentSpeed;
       break;
     case 'shift':
-      camera.position.y -= speed;
+      camera.position.y -= currentSpeed;
       break;
   }
-    });
+});
 
 const sunGeometrySphere = new THREE.SphereGeometry(1390, 32, 32);  
 const mecuryGeometrySphere = new THREE.SphereGeometry(4.9, 32, 32);       
@@ -441,7 +443,7 @@ export const celestialBodies = {
   pluto
 };
 
-export { camera };  // Add this line
+export {camera};
 
 export function getPosition(celestialBody) {
   const position = celestialBody.getWorldPosition(new THREE.Vector3());
@@ -450,4 +452,20 @@ export function getPosition(celestialBody) {
     y: position.y,
     z: position.z
   };
+}
+
+export function updateSpeed(value) {
+  currentSpeed = value;
+}
+
+export function updateSensitivity(value) {
+  currentSensitivity = value;
+}
+
+export function getCurrentSpeed() {
+  return currentSpeed;
+}
+
+export function getCurrentSensitivity() {
+  return currentSensitivity;
 }

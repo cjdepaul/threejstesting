@@ -1,4 +1,4 @@
-import { celestialBodies, getPosition, camera } from './main.js';
+import { celestialBodies, getPosition, camera, updateSpeed, updateSensitivity, getCurrentSpeed, getCurrentSensitivity } from './main.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize menu elements
@@ -107,5 +107,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 startFollowing(celestialName, celestialBody);
             }
         });
+    });
+
+    // Initialize sliders with current values
+    const speedSlider = document.getElementById('speed');
+    const sensitivitySlider = document.getElementById('camera-sensitivity');
+    const speedValue = document.getElementById('speed-value');
+    const sensitivityValue = document.getElementById('sensitivity-value');
+
+    speedSlider.value = getCurrentSpeed();
+    sensitivitySlider.value = getCurrentSensitivity();
+    speedValue.textContent = getCurrentSpeed();
+    sensitivityValue.textContent = getCurrentSensitivity();
+
+    // Update display values while dragging
+    speedSlider.addEventListener('input', function(e) {
+        speedValue.textContent = e.target.value;
+    });
+
+    sensitivitySlider.addEventListener('input', function(e) {
+        sensitivityValue.textContent = e.target.value;
+    });
+
+    // Update actual values when letting go
+    speedSlider.addEventListener('change', function(e) {
+        updateSpeed(parseInt(e.target.value));
+    });
+
+    sensitivitySlider.addEventListener('change', function(e) {
+        updateSensitivity(parseInt(e.target.value));
     });
 });

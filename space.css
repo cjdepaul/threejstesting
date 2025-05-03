@@ -1,8 +1,10 @@
+/* Global Styles */
 body {
     overflow: hidden;
     background-color: black;
 }
 
+/* Menu Container */
 #menu {
     position: fixed;
     top: 10px;
@@ -11,27 +13,7 @@ body {
     color: white;
 }
 
-#dropmenu {
-    background: #333;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-#menuitems {
-    display: none;
-    background: #222;
-    min-width: 200px;
-    border: 1px solid #444;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-    margin-right: 10px;
-}
-
+/* Main Menu Button */
 .dropbtn {
     background: #333;
     color: white;
@@ -41,18 +23,21 @@ body {
     border-radius: 4px;
 }
 
-.dropdown-content {
-    display: none;
-    position: relative;
-    background: #222;
-    min-width: 200px;
-    border: 1px solid #444;
-    border-radius: 4px;
-    margin-top: 5px;
+/* Menu Header */
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #333;
+    border-bottom: 1px solid #444;
+    border-radius: 4px 4px 0 0;
 }
 
-.dropdown-content.show {
-    display: block;
+.menu-header span {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 #closeMenu {
@@ -71,6 +56,22 @@ body {
     border-radius: 4px;
 }
 
+/* Menu Content */
+.dropdown-content {
+    display: none;
+    position: relative;
+    background: #222;
+    min-width: 200px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+/* Menu Sections */
 .menu-section {
     border-bottom: 1px solid #444;
     width: 300px;
@@ -109,6 +110,23 @@ body {
     display: block;
 }
 
+/* Slider Controls */
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider-value {
+    min-width: 30px;
+    color: white;
+}
+
+.menu-item {
+    margin: 10px 0;
+}
+
+/* Celestial Body Items */
 .celestial-item {
     padding: 10px;
     border-bottom: 1px solid #444;
@@ -126,6 +144,7 @@ body {
     flex: 1;
 }
 
+/* Button Groups */
 .button-group {
     display: flex;
     gap: 5px;
@@ -141,20 +160,4 @@ body {
 
 .button-group button:hover {
     background: #555;
-}
-
-.menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background: #333;
-    border-bottom: 1px solid #444;
-    border-radius: 4px 4px 0 0;
-}
-
-.menu-header span {
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
 }
