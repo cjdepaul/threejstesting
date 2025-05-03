@@ -1,4 +1,3 @@
-
 const canvas = document.querySelector('#c');
 const renderer = new THREE.WebGLRenderer({antialias: true, canvas});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -85,8 +84,6 @@ document.addEventListener('keydown', (event) => {
   }
     });
 
-
-
 const sunGeometrySphere = new THREE.SphereGeometry(1390, 32, 32);  
 const mecuryGeometrySphere = new THREE.SphereGeometry(4.9, 32, 32);       
 const venusGeometrySphere = new THREE.SphereGeometry(12.1, 32, 32);          
@@ -168,8 +165,6 @@ const uranusRingMaterial = new THREE.MeshPhysicalMaterial({
 const neptuneMaterialSphere = new THREE.MeshPhysicalMaterial({map: neptuneTexture});
 const plutoMaterialSphere = new THREE.MeshPhysicalMaterial({map: plutoTexture});
 
-
-
 // Orbit Materials
 const mercuryOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const venusOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
@@ -192,7 +187,6 @@ sunLight.shadow.mapSize.width = 300000;
 sunLight.shadow.mapSize.height = 10000;
 sunLight.shadow.camera.near = 1;
 sunLight.shadow.camera.far = 300000;
-
 
 const mercury = new THREE.Mesh(mecuryGeometrySphere, mercuryMaterialSphere);
 mercury.position.set(2000, 0, 0);
@@ -234,7 +228,6 @@ saturnRing.rotation.x = Math.PI / 2;
 saturnRing.rotation.y =  0.25;
 saturnRing.position.set(49500, 0, 0);
 saturnRing.receiveShadow = true;
-
 
 const uranus = new THREE.Mesh(uranusGeometrySphere, uranusMaterialSphere);
 uranus.position.set(99000, 0, 0);
@@ -326,7 +319,6 @@ uranusPivot.add(uranusRing);
 neptunePivot.add(neptune);
 plutoPivot.add(pluto);
 
-
 const orbitalSpeeds = {
   mercury: 1,
   venus: 0.391,
@@ -387,3 +379,28 @@ scene.add(plutoOrbit);
 scene.add(sunLight);
 scene.add(sun);
 renderer.render(scene, camera);
+
+export const celestialBodies = {
+  sun,
+  mercury,
+  venus,
+  earth,
+  moon,
+  mars,
+  jupiter,
+  saturn,
+  uranus,
+  neptune,
+  pluto
+};
+
+export { camera };  // Add this line
+
+export function getPosition(celestialBody) {
+  const position = celestialBody.getWorldPosition(new THREE.Vector3());
+  return {
+    x: position.x,
+    y: position.y,
+    z: position.z
+  };
+}
