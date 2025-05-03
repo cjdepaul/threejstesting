@@ -5,10 +5,11 @@ function main() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
     camera.position.z = 400;
     camera.position.y = 200;
     camera.position.x = 0;
+    camera.lookAt(0, 0, 0);
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000);
 
@@ -122,11 +123,12 @@ function main() {
     const earthOrbitRing = new THREE.RingGeometry(160, 160.3, 64);
     const moonOrbitRing = new THREE.RingGeometry(10, 10.3, 64);
     const marsOrbitRing = new THREE.RingGeometry(200, 200.3, 64);
-    const jupiterOrbitRing = new THREE.RingGeometry(240, 240.3, 64);
-    const saturnOrbitRing = new THREE.RingGeometry(280, 280.3, 64);
-    const uranusOrbitRing = new THREE.RingGeometry(320, 320.3, 64);
-    const neptuneOrbitRing = new THREE.RingGeometry(360, 360.3, 64);
-    const plutoOrbitRing = new THREE.RingGeometry(400, 400.3, 64);
+    // Large gap for asteroid belt (200 -> 400)
+    const jupiterOrbitRing = new THREE.RingGeometry(400, 400.3, 64);
+    const saturnOrbitRing = new THREE.RingGeometry(500, 500.3, 64);
+    const uranusOrbitRing = new THREE.RingGeometry(600, 600.3, 64);
+    const neptuneOrbitRing = new THREE.RingGeometry(700, 700.3, 64);
+    const plutoOrbitRing = new THREE.RingGeometry(800, 800.3, 64);
 
     // Textures
     const sunTexture = new THREE.TextureLoader().load('images/sun.jpg');
@@ -183,7 +185,7 @@ function main() {
     // Meshes
     const sun = new THREE.Mesh(sunGeometrySphere, sunMaterialSphere);
     sun.position.set(0, 0, 0);
-    const sunLight = new THREE.PointLight(0xffffff, 2, 10000);
+    const sunLight = new THREE.PointLight(0xffffff, 1, 10000);
     sunLight.position.set(0, 0, 0);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.width = 1024;
@@ -218,40 +220,40 @@ function main() {
     mars.receiveShadow = true;
 
     const jupiter = new THREE.Mesh(jupiterGeometrySphere, jupiterMaterialSphere);
-    jupiter.position.set(240, 0, 0);
+    jupiter.position.set(400, 0, 0);
     jupiter.castShadow = true;
     jupiter.receiveShadow = true;
 
     const saturn = new THREE.Mesh(saturnGeometrySphere, saturnMaterialSphere);
-    saturn.position.set(280, 0, 0);
+    saturn.position.set(500, 0, 0);
     saturn.castShadow = true;
     saturn.receiveShadow = true;
 
     const saturnRing = new THREE.Mesh(saturnRingGeometry, saturnRingMaterial);
     saturnRing.rotation.x = Math.PI / 2;
     saturnRing.rotation.y =  0.25;
-    saturnRing.position.set(280, 0, 0);
+    saturnRing.position.set(500, 0, 0);
     saturnRing.receiveShadow = true;
 
 
     const uranus = new THREE.Mesh(uranusGeometrySphere, uranusMaterialSphere);
-    uranus.position.set(320, 0, 0);
+    uranus.position.set(600, 0, 0);
     uranus.castShadow = true;
     uranus.receiveShadow = true;
 
     const uranusRing = new THREE.Mesh(uranusRingGeometry, uranusRingMaterial);
     uranusRing.rotation.x = Math.PI / 2;
     uranusRing.rotation.y = 2;
-    uranusRing.position.set(320, 0, 0);
+    uranusRing.position.set(600, 0, 0);
     uranusRing.receiveShadow = true;
 
     const neptune = new THREE.Mesh(neptuneGeometrySphere, neptuneMaterialSphere);
-    neptune.position.set(360, 0, 0);
+    neptune.position.set(700, 0, 0);
     neptune.castShadow = true;
     neptune.receiveShadow = true;
 
     const pluto = new THREE.Mesh(plutoGeometrySphere, plutoMaterialSphere);
-    pluto.position.set(400, 0, 0);
+    pluto.position.set(800, 0, 0);
     pluto.castShadow = true;
     pluto.receiveShadow = true;
 
