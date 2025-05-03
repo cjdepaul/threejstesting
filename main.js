@@ -59,10 +59,10 @@ function main() {
           camera.position.addScaledVector(direction, -speed);
           break;
         case 'a':
-          camera.position.x -= speed;
+          camera.position.addScaledVector(direction.cross(new THREE.Vector3(0, 1, 0)), -speed);
           break;
         case 'd':
-          camera.position.x += speed;
+          camera.position.addScaledVector(direction.cross(new THREE.Vector3(0, 1, 0)), speed);
           break;
         case 'arrowup':
           camera.position.y += speed;
