@@ -14,9 +14,11 @@ function main() {
 
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
-
+    let yaw = 0;   // left/right
+    let pitch = 0; // up/down
+    
     document.addEventListener('mousedown', (event) => {
-      if (event.button === 0) { // Left mouse button
+      if (event.button === 0) {
         isDragging = true;
         previousMousePosition = {
           x: event.clientX,
@@ -24,21 +26,29 @@ function main() {
         };
       }
     });
-
+    
     document.addEventListener('mouseup', () => {
       isDragging = false;
     });
-
+    
     document.addEventListener('mousemove', (event) => {
       if (isDragging) {
         const deltaMove = {
           x: event.clientX - previousMousePosition.x,
           y: event.clientY - previousMousePosition.y
         };
-
-        camera.rotation.y -= deltaMove.x * 0.01;
-        camera.rotation.x -= deltaMove.y * 0.01;
-
+    
+        yaw -= deltaMove.x * 0.005;
+        pitch -= deltaMove.y * 0.005;
+    
+        // Clamp pitch to prevent flipping
+        const maxPitch = Math.PI / 2 - 0.01;
+        const minPitch = -maxPitch;
+        pitch = Math.max(minPitch, Math.min(maxPitch, pitch));
+    
+        const euler = new THREE.Euler(pitch, yaw, 0, 'YXZ');
+        camera.quaternion.setFromEuler(euler);
+    
         previousMousePosition = {
           x: event.clientX,
           y: event.clientY
