@@ -3,19 +3,91 @@
 <head>
 	<title>Testing how to use three.js</title>
 	<script type="text/javascript" src="three.r124.min.js"></script>
-	<style type="text/css">
-		
-		*
-		{
-			overflow: hidden;
-			background-color: black;
-			margin: 0;
-			padding: 0;
-		}
-
-	</style>
+	<link rel="stylesheet" type="text/css" href="space.css">
 </head>
 <body>
+	<div id="menu">
+		<button id="dropmenu">Menu</button>
+		<div id="menuitems">
+			<div class="celestial-item">
+				<span class="celestial-name">Sun</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Mercury</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Venus</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Earth</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Moon</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Mars</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Jupiter</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Saturn</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Uranus</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Neptune</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+			<div class="celestial-item">
+				<span class="celestial-name">Pluto</span>
+				<div class="button-group">
+					<button class="goto-button">Go to</button>
+					<button class="follow-button">Follow</button>
+				</div>
+			</div>
+		</div>
+	</div>	
 	<canvas id="c"></canvas>
 	<script type="module" src="main.js"></script>
 </body>

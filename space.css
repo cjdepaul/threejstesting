@@ -1,0 +1,67 @@
+
+* {
+    overflow: hidden;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+#menu {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+#dropmenu {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#menuitems {
+    display: none;
+    background: #222;
+    min-width: 200px;
+    border: 1px solid #444;
+}
+
+#menu:hover #menuitems {
+    display: block;
+}
+
+.celestial-item {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.celestial-item:last-child {
+    border-bottom: none;
+}
+
+.celestial-name {
+    flex: 1;
+}
+
+.button-group {
+    display: flex;
+    gap: 5px;
+}
+
+.button-group button {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.button-group button:hover {
+    background: #555;
+}
