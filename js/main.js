@@ -69,7 +69,7 @@ document.addEventListener('mousemove', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  const speed = 150;
+  const speed =50;
   const direction = new THREE.Vector3();
   camera.getWorldDirection(direction);
 
@@ -191,13 +191,33 @@ const plutoOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: T
 // Meshes
 const sun = new THREE.Mesh(sunGeometrySphere, sunMaterialSphere);
 sun.position.set(0, 0, 0);
-const sunLight = new THREE.PointLight(0xffffff, 1, 300000);
-sunLight.position.set(0, 0, 0);
-sunLight.castShadow = true;
-sunLight.shadow.mapSize.width = 300000;
-sunLight.shadow.mapSize.height = 10000;
-sunLight.shadow.camera.near = 1;
-sunLight.shadow.camera.far = 300000;
+const sunLights = [];
+const numberOfLights = 4;
+const sunRadius = 1390;
+const lightIntensity = 0.2;
+
+for (let i = 0; i < numberOfLights; i++) {
+    const angle = (i / numberOfLights) * Math.PI * 2;
+    const height = [-0.5, 0.5];
+    
+    height.forEach(h => {
+        const light = new THREE.PointLight(0xffffff, lightIntensity, 300000);
+        light.position.x = sunRadius * Math.cos(angle);
+        light.position.y = sunRadius * h;
+        light.position.z = sunRadius * Math.sin(angle);
+        
+        if (i < 2) { 
+            light.castShadow = true;
+            light.shadow.mapSize.width = 1024;
+            light.shadow.mapSize.height = 1024;
+            light.shadow.camera.near = 10;
+            light.shadow.camera.far = 300000;
+        }
+        
+        sunLights.push(light);
+        sun.add(light);
+    });
+}
 
 const mercury = new THREE.Mesh(mecuryGeometrySphere, mercuryMaterialSphere);
 mercury.position.set(2000, 0, 0);
@@ -361,7 +381,7 @@ function animate() {
   sun.rotation.y += 0.001;
 
   // adds orbits to the planets
-  const speedOrbit = 0.005;
+  const speedOrbit = 0.0001;
   mercuryPivot.rotation.y += orbitalSpeeds.mercury * speedOrbit;
   venusPivot.rotation.y += orbitalSpeeds.venus * speedOrbit;
   earthPivot.rotation.y += orbitalSpeeds.earth * speedOrbit;
@@ -399,7 +419,6 @@ scene.add(saturnOrbit);
 scene.add(uranusOrbit);
 scene.add(neptuneOrbit);
 scene.add(plutoOrbit);
-scene.add(sunLight);
 scene.add(sun);
 renderer.render(scene, camera);
 
