@@ -14,7 +14,14 @@ camera.position.y = 2000;
 camera.position.x = 0;
 camera.lookAt(0, 0, 0);
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x000000);
+const spaceTexture = new THREE.TextureLoader().load('images/space.jpg');
+const spaceGeometry = new THREE.SphereGeometry(300000, 64, 64);
+const spaceMaterial = new THREE.MeshBasicMaterial({
+  map: spaceTexture,
+  side: THREE.BackSide
+});
+const spaceSphere = new THREE.Mesh(spaceGeometry, spaceMaterial);
+scene.add(spaceSphere);
 
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
