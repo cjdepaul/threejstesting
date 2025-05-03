@@ -28,8 +28,13 @@ let previousMousePosition = { x: 0, y: 0 };
 let yaw = 0;   // left/right
 let pitch = 0; // up/down
 
+function isInteractingWithMenu(event) {
+    const menu = document.getElementById('menu');
+    return menu.contains(event.target);
+}
+
 document.addEventListener('mousedown', (event) => {
-  if (event.button === 0) {
+  if (event.button === 0 && !isInteractingWithMenu(event)) {
     isDragging = true;
     previousMousePosition = {
       x: event.clientX,
@@ -43,7 +48,7 @@ document.addEventListener('mouseup', () => {
 });
 
 document.addEventListener('mousemove', (event) => {
-  if (isDragging) {
+  if (isDragging && !isInteractingWithMenu(event)) {
     const deltaMove = {
       x: event.clientX - previousMousePosition.x,
       y: event.clientY - previousMousePosition.y

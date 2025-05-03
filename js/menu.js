@@ -1,24 +1,54 @@
 import { celestialBodies, getPosition, camera } from './main.js';
 
 document.addEventListener('DOMContentLoaded', function() {
-    const dropMenu = document.getElementById('dropmenu');
-    const menuItems = document.getElementById('menuitems');
-    let isMenuOpen = false;
+    // Initialize menu elements
+    const mainMenuBtn = document.getElementById('mainMenuBtn');
+    const mainMenuContent = document.getElementById('mainMenuContent');
+    const movementBtn = document.getElementById('movementSettingsBtn');
+    const celestialBtn = document.getElementById('celestialBodiesBtn');
+    const movementContent = document.getElementById('movementSettingsContent');
+    const celestialContent = document.getElementById('celestialBodiesContent');
+    const closeMenuBtn = document.getElementById('closeMenu');
 
-    dropMenu.addEventListener('click', function() {
-        isMenuOpen = !isMenuOpen;
-        menuItems.style.display = isMenuOpen ? 'block' : 'none';
+    // Closes the menu and resets the display of buttons
+    function closeMenu() {
+        mainMenuContent.classList.remove('show');
+        mainMenuBtn.style.display = 'block';
+        movementContent.classList.remove('show');
+        celestialContent.classList.remove('show');
+    }
+
+    // Event listeners for menu buttons
+    mainMenuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainMenuContent.classList.toggle('show');
+        mainMenuBtn.style.display = 'none';
     });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!menu.contains(event.target)) {
-            isMenuOpen = false;
-            menuItems.style.display = 'none';
+    movementBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        celestialContent.classList.remove('show');
+        movementContent.classList.toggle('show');
+    });
+
+    celestialBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        movementContent.classList.remove('show');
+        celestialContent.classList.toggle('show');
+    });
+
+    closeMenuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeMenu();
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#menu')) {
+            closeMenu();
         }
     });
 
-    // Setup button handlers
+    // Button handlers for celestial bodies
     document.querySelectorAll('.goto-button').forEach(button => {
         button.addEventListener('click', function(e) {
             stopFollowing();

@@ -7,82 +7,104 @@
 </head>
 <body>
 	<div id="menu">
-		<button id="dropmenu">Menu</button>
-		<div id="menuitems">
-			<div class="celestial-item">
-				<span class="celestial-name">Sun</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
+		<button class="dropbtn" id="mainMenuBtn">Menu</button>
+		<div class="dropdown-content" id="mainMenuContent">
+			<div class="menu-header">
+				<span>Menu</span>
+				<button id="closeMenu">×</button>
+			</div>
+			<div class="menu-section">
+				<button class="section-btn" id="movementSettingsBtn">Movement Settings</button>
+				<div class="section-content" id="movementSettingsContent">
+					<div class="menu-item">
+						<span class="menu-name">Speed</span>
+						<input type="range" id="speed" min="0" max="500" value="50" step="1">
+					</div>
+					<div class="menu-item">
+						<span class="menu-name">Camera Sensitivity</span>
+						<input type="range" id="camera-sensitivity" min="0" max="100" value="50" step="1">
+					</div>
 				</div>
 			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Mercury</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Venus</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Earth</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Moon</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Mars</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Jupiter</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Saturn</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Uranus</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Neptune</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
-				</div>
-			</div>
-			<div class="celestial-item">
-				<span class="celestial-name">Pluto</span>
-				<div class="button-group">
-					<button class="goto-button">Go to</button>
-					<button class="follow-button">Follow</button>
+			<div class="menu-section">
+				<button class="section-btn" id="celestialBodiesBtn">Celestial Bodies</button>
+				<div class="section-content" id="celestialBodiesContent">
+					<div class="celestial-item">
+						<span class="celestial-name">Sun</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Mercury</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Venus</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Earth</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Moon</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Mars</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Jupiter</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Saturn</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Uranus</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Neptune</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
+					<div class="celestial-item">
+						<span class="celestial-name">Pluto</span>
+						<div class="button-group">
+							<button class="goto-button">Go to</button>
+							<button class="follow-button">Follow</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
