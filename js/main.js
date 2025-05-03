@@ -132,6 +132,49 @@ for (let i = 0; i < pos.count; i++) {
 const neptuneGeometrySphere = new THREE.SphereGeometry(49.5, 32, 32);        
 const plutoGeometrySphere = new THREE.SphereGeometry(2.3, 32, 32);         
 
+// Asteroid Belt
+const asteroidCount = 10000;
+const asteroidBeltGeometry = new THREE.BufferGeometry();
+const asteroidPositions = [];
+const asteroidColors = [];
+const asteroidSizes = [];
+
+const minRadius = 11000; 
+const maxRadius = 23000;  
+const beltThickness = 2000;
+
+for (let i = 0; i < asteroidCount; i++) {
+    const radius = Math.random() * (maxRadius - minRadius) + minRadius;
+    const theta = Math.random() * Math.PI * 2;
+    const y = (Math.random() - 0.5) * beltThickness;
+
+    asteroidPositions.push(
+        radius * Math.cos(theta),
+        y,
+        radius * Math.sin(theta)
+    );
+
+    
+    const color = Math.random() * 0.4 + 0.4; // Range: 0.4 to 0.8
+    asteroidColors.push(color, color, color);
+
+    // Random size between 10 and 100
+    asteroidSizes.push(Math.random() * 90 + 10);
+}
+
+asteroidBeltGeometry.setAttribute('position', new THREE.Float32BufferAttribute(asteroidPositions, 3));
+asteroidBeltGeometry.setAttribute('color', new THREE.Float32BufferAttribute(asteroidColors, 3));
+asteroidBeltGeometry.setAttribute('size', new THREE.Float32BufferAttribute(asteroidSizes, 1));
+
+const asteroidMaterial = new THREE.PointsMaterial({
+    size: 1,
+    vertexColors: true,
+    sizeAttenuation: true
+});
+
+const asteroidBelt = new THREE.Points(asteroidBeltGeometry, asteroidMaterial);
+scene.add(asteroidBelt);
+
 // Orbit Geometries
 const mercuryOrbitRing = new THREE.RingGeometry(2000, 2001, 256);
 const venusOrbitRing = new THREE.RingGeometry(3700, 3701, 256);
@@ -412,6 +455,9 @@ function animate() {
   uranus.rotation.y += 0.017 / speedSlower;     
   neptune.rotation.y += 0.018 / speedSlower; 
   pluto.rotation.y += 0.004 / speedSlower;   
+
+  // Rotate asteroid belt
+  asteroidBelt.rotation.y += 0.0005 / speedSlower;
 
   renderer.render(scene, camera);
 }
