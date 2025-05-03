@@ -6,8 +6,8 @@ function main() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 400000);
-    camera.position.z = 203000;
-    camera.position.y = 200;
+    camera.position.z = 10000;
+    camera.position.y = 2000;
     camera.position.x = 0;
     camera.lookAt(0, 0, 0);
     const scene = new THREE.Scene();
@@ -95,23 +95,23 @@ function main() {
     const marsGeometrySphere = new THREE.SphereGeometry(6.8, 32, 32);         
     const jupiterGeometrySphere = new THREE.SphereGeometry(139, 32, 32);       
     const saturnGeometrySphere = new THREE.SphereGeometry(116, 32, 32);        
-    const saturnRingGeometry = new THREE.RingBufferGeometry(140, 280, 64);     
+    const saturnRingGeometry = new THREE.RingBufferGeometry(140, 270, 64);     // Extended to ~2.3x Saturn's radius
     var pos = saturnRingGeometry.attributes.position;
     var v3 = new THREE.Vector3();
     for (let i = 0; i < pos.count; i++) {
         v3.fromBufferAttribute(pos, i);
-        const u = (v3.length() - 140) / (180 - 140); 
+        const u = (v3.length() - 140) / (270 - 140); // Updated for new dimensions
         const v = (i % 2); 
         saturnRingGeometry.attributes.uv.setXY(i, u, v);
     }
     const uranusGeometrySphere = new THREE.SphereGeometry(51, 32, 32);         
-    const uranusRingGeometry = new THREE.RingBufferGeometry(61, 75, 64);      
+    const uranusRingGeometry = new THREE.RingBufferGeometry(65, 102, 64);      // Extended to 2x Uranus' radius
     var pos = uranusRingGeometry.attributes.position;
     var v3 = new THREE.Vector3();
     for (let i = 0; i < pos.count; i++) {
         v3.fromBufferAttribute(pos, i);
-        const u = (v3.length() - 60) / (70 - 60); // normalize radius to 0-1
-        const v = (i % 2); // alternate between 0 and 1 for inner/outer edge
+        const u = (v3.length() - 65) / (102 - 65); // Updated for new dimensions
+        const v = (i % 2);
         uranusRingGeometry.attributes.uv.setXY(i, u, v);
     }
     const neptuneGeometrySphere = new THREE.SphereGeometry(49.5, 32, 32);        
