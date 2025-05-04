@@ -136,6 +136,11 @@ body {
     align-items: center;
 }
 
+.celestial-item.following {
+    background-color: #1a4731;
+    border: 1px solid #2ecc71;
+}
+
 .celestial-item:last-child {
     border-bottom: none;
 }

@@ -66,10 +66,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let followInterval = null;
 
     function updateFollowButtons() {
-        document.querySelectorAll('.follow-button').forEach(btn => {
-            const itemName = btn.closest('.celestial-item')
-                               .querySelector('.celestial-name').textContent.toLowerCase();
-            btn.textContent = (itemName === followingBody) ? 'Unfollow' : 'Follow';
+        document.querySelectorAll('.celestial-item').forEach(item => {
+            const itemName = item.querySelector('.celestial-name').textContent.toLowerCase();
+            const followBtn = item.querySelector('.follow-button');
+            if (followBtn) {
+                followBtn.textContent = (itemName === followingBody) ? 'Unfollow' : 'Follow';
+                if (itemName === followingBody) {
+                    item.classList.add('following');
+                } else {
+                    item.classList.remove('following');
+                }
+            }
         });
     }
 
