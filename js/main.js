@@ -17,7 +17,7 @@ camera.position.y = 2000;
 camera.position.x = 0;
 camera.lookAt(0, 0, 0);
 const scene = new THREE.Scene();
-const spaceTexture = new THREE.TextureLoader().load('images/space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('images/textures/space.jpg');
 const spaceGeometry = new THREE.SphereGeometry(300000, 64, 64);
 const spaceMaterial = new THREE.MeshBasicMaterial({
   map: spaceTexture,
@@ -189,19 +189,19 @@ const neptuneOrbitRing = new THREE.RingGeometry(155000, 155001, 1024);
 const plutoOrbitRing = new THREE.RingGeometry(203000, 203001, 2048);
 
 // Textures
-const sunTexture = new THREE.TextureLoader().load('images/sun.jpg');
-const mercuryTexture = new THREE.TextureLoader().load('images/mercury.jpg');
-const venusTexture = new THREE.TextureLoader().load('images/venus.jpg');
-const earthTexture = new THREE.TextureLoader().load('images/earth.jpg');
-const moonTexture = new THREE.TextureLoader().load('images/moon.jpg');
-const marsTexture = new THREE.TextureLoader().load('images/mars.jpg');
-const jupiterTexture = new THREE.TextureLoader().load('images/jupiter.jpg');
-const saturnTexture = new THREE.TextureLoader().load('images/saturn.jpg');
-const saturnRingTexture = new THREE.TextureLoader().load('images/saturnsrings.png');
-const uranusTexture = new THREE.TextureLoader().load('images/uranus.jpg');
-const uranusRingTexture = new THREE.TextureLoader().load('images/uranusrings.png');
-const neptuneTexture = new THREE.TextureLoader().load('images/neptune.jpg');
-const plutoTexture = new THREE.TextureLoader().load('images/pluto.webp');
+const sunTexture = new THREE.TextureLoader().load('images/textures/sun.jpg');
+const mercuryTexture = new THREE.TextureLoader().load('images/textures/mercury.jpg');
+const venusTexture = new THREE.TextureLoader().load('images/textures/venus.jpg');
+const earthTexture = new THREE.TextureLoader().load('images/textures/earth.jpg');
+const moonTexture = new THREE.TextureLoader().load('images/textures/moon.jpg');
+const marsTexture = new THREE.TextureLoader().load('images/textures/mars.jpg');
+const jupiterTexture = new THREE.TextureLoader().load('images/textures/jupiter.jpg');
+const saturnTexture = new THREE.TextureLoader().load('images/textures/saturn.jpg');
+const saturnRingTexture = new THREE.TextureLoader().load('images/textures/saturnsrings.png');
+const uranusTexture = new THREE.TextureLoader().load('images/textures/uranus.jpg');
+const uranusRingTexture = new THREE.TextureLoader().load('images/textures/uranusrings.png');
+const neptuneTexture = new THREE.TextureLoader().load('images/textures/neptune.jpg');
+const plutoTexture = new THREE.TextureLoader().load('images/textures/pluto.webp');
 
 // Planet Materials
 const sunMaterialSphere = new THREE.MeshBasicMaterial({map: sunTexture});
