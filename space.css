@@ -126,7 +126,30 @@ body {
     margin: 10px 0;
 }
 
-/* Celestial Body Items */
+#celestialBodiesContent {
+    max-height: 600px; 
+    overflow-y: auto;
+    scrollbar-width: thin; 
+    scrollbar-color: #444 #222;
+}
+
+#celestialBodiesContent::-webkit-scrollbar {
+    width: 8px;
+}
+
+#celestialBodiesContent::-webkit-scrollbar-track {
+    background: #222;
+}
+
+#celestialBodiesContent::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 4px;
+}
+
+#celestialBodiesContent::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
 .celestial-item {
     padding: 10px;
     border-bottom: 1px solid #444;
