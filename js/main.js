@@ -128,22 +128,22 @@ const moonGeometrySphere = new THREE.SphereGeometry(3.5, 32, 32);
 const marsGeometrySphere = new THREE.SphereGeometry(6.8, 32, 32);         
 const jupiterGeometrySphere = new THREE.SphereGeometry(139, 32, 32);       
 const saturnGeometrySphere = new THREE.SphereGeometry(116, 32, 32);        
-const saturnRingGeometry = new THREE.RingBufferGeometry(140, 270, 64);     // Extended to ~2.3x Saturn's radius
+const saturnRingGeometry = new THREE.RingBufferGeometry(140, 270, 64);    
 var pos = saturnRingGeometry.attributes.position;
 var v3 = new THREE.Vector3();
 for (let i = 0; i < pos.count; i++) {
     v3.fromBufferAttribute(pos, i);
-    const u = (v3.length() - 140) / (270 - 140); // Updated for new dimensions
+    const u = (v3.length() - 140) / (270 - 140); 
     const v = (i % 2); 
     saturnRingGeometry.attributes.uv.setXY(i, u, v);
 }
 const uranusGeometrySphere = new THREE.SphereGeometry(51, 32, 32);         
-const uranusRingGeometry = new THREE.RingBufferGeometry(65, 102, 64);      // Extended to 2x Uranus' radius
+const uranusRingGeometry = new THREE.RingBufferGeometry(65, 102, 64);    
 var pos = uranusRingGeometry.attributes.position;
 var v3 = new THREE.Vector3();
 for (let i = 0; i < pos.count; i++) {
     v3.fromBufferAttribute(pos, i);
-    const u = (v3.length() - 65) / (102 - 65); // Updated for new dimensions
+    const u = (v3.length() - 65) / (102 - 65); 
     const v = (i % 2);
     uranusRingGeometry.attributes.uv.setXY(i, u, v);
 }
