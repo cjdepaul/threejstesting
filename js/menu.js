@@ -56,7 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                         .querySelector('.celestial-name').textContent.toLowerCase();
             const celestialBody = celestialBodies[celestialName];
             const position = getPosition(celestialBody);
-            camera.position.set(position.x - 200, position.y + 150, position.z + 150);
+            if (celestialName == "sun") {
+                camera.position.set(position.x, position.y + 2000, position.z + 2000);
+            }
+            else {
+                camera.position.set(position.x - 200, position.y + 150, position.z + 150);
+            }
             camera.lookAt(position.x, position.y, position.z);
 
         });
