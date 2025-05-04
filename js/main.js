@@ -76,6 +76,24 @@ document.addEventListener('mousemove', (event) => {
   }
 });
 
+document.addEventListener('wheel', (event) => {
+
+  if (event.deltaY < 0) {
+    // Scrolling up - increase speed
+    currentSpeed = Math.min(currentSpeed + 5, 500);
+  } else {
+    // Scrolling down - decrease speed
+    currentSpeed = Math.max(currentSpeed - 5, 0);
+  }
+
+  const speedSlider = document.getElementById('speed');
+  const speedValue = document.getElementById('speed-value');
+  if (speedSlider && speedValue) {
+    speedSlider.value = currentSpeed;
+    speedValue.textContent = currentSpeed;
+  }
+});
+
 document.addEventListener('keydown', (event) => {
   const direction = new THREE.Vector3();
   camera.getWorldDirection(direction);

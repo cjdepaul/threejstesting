@@ -7,5 +7,7 @@ Solar System Sim (WIP):
 To move use wasd to move forward, backwards, left, and right
 To move up and down use space bar and shift 
 To change where the you are looking click and drag
+You can use the scrollwheel or the menu to change your speed
+Camera sensitivity is only in the menu
 This simulation is not perfectly accurate, but the main variables to change if you'd like to make it more accurate
 should be simple enough to find.
