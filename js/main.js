@@ -36,6 +36,13 @@ function isInteractingWithMenu(event) {
     return menu.contains(event.target);
 }
 
+// Resize the renderer and camera aspect ratio on window resize
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
 document.addEventListener('mousedown', (event) => {
   if (event.button === 0 && !isInteractingWithMenu(event)) {
     isDragging = true;
