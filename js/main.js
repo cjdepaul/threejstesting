@@ -471,7 +471,7 @@ function animate() {
   sun.rotation.y += 0.001;
 
   // adds orbits to the planets
-  const speedOrbit = 0.0001;
+  const speedOrbit = 0.001;
   mercuryPivot.rotation.y += orbitalSpeeds.mercury * speedOrbit;
   venusPivot.rotation.y += orbitalSpeeds.venus * speedOrbit;
   earthPivot.rotation.y += orbitalSpeeds.earth * speedOrbit;
