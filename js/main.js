@@ -142,6 +142,7 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+// Geometries for celestial bodies and their respective parts
 const sunGeometrySphere = new THREE.SphereGeometry(1390, 32, 32);  
 const mecuryGeometrySphere = new THREE.SphereGeometry(4.9, 32, 32);       
 const venusGeometrySphere = new THREE.SphereGeometry(12.1, 32, 32);          
@@ -159,6 +160,11 @@ for (let i = 0; i < pos.count; i++) {
     const v = (i % 2); 
     saturnRingGeometry.attributes.uv.setXY(i, u, v);
 }
+// Saturns moons
+const titanGeometrySphere = new THREE.SphereGeometry(5, 32, 32);
+
+
+
 const uranusGeometrySphere = new THREE.SphereGeometry(51, 32, 32);         
 const uranusRingGeometry = new THREE.RingBufferGeometry(65, 102, 64);    
 var pos = uranusRingGeometry.attributes.position;
@@ -224,6 +230,7 @@ const marsOrbitRing = new THREE.RingGeometry(7900, 7901, 256);
 // Large gap for asteroid belt
 const jupiterOrbitRing = new THREE.RingGeometry(27000, 27001, 256);
 const saturnOrbitRing = new THREE.RingGeometry(49500, 49501, 256);
+const titanOrbitRing = new THREE.RingGeometry(2475, 2476, 256); 
 const uranusOrbitRing = new THREE.RingGeometry(99000, 99001, 512);
 const neptuneOrbitRing = new THREE.RingGeometry(155000, 155001, 1024);
 const plutoOrbitRing = new THREE.RingGeometry(203000, 203001, 2048);
@@ -238,6 +245,7 @@ const marsTexture = new THREE.TextureLoader().load('images/textures/mars.jpg');
 const jupiterTexture = new THREE.TextureLoader().load('images/textures/jupiter.jpg');
 const saturnTexture = new THREE.TextureLoader().load('images/textures/saturn.jpg');
 const saturnRingTexture = new THREE.TextureLoader().load('images/textures/saturnsrings.png');
+const titanTexture = new THREE.TextureLoader().load('images/textures/titan.webp');
 const uranusTexture = new THREE.TextureLoader().load('images/textures/uranus.jpg');
 const uranusRingTexture = new THREE.TextureLoader().load('images/textures/uranusrings.png');
 const neptuneTexture = new THREE.TextureLoader().load('images/textures/neptune.jpg');
@@ -257,6 +265,7 @@ const saturnRingMaterial = new THREE.MeshPhysicalMaterial({
     side: THREE.DoubleSide,
     transparent: true
 });
+const titanMaterialSphere = new THREE.MeshPhysicalMaterial({map: titanTexture});
 const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({map: uranusTexture});
 const uranusRingMaterial = new THREE.MeshPhysicalMaterial({
     map: uranusRingTexture,
@@ -274,6 +283,7 @@ const moonOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: TH
 const marsOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const jupiterOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const saturnOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+const titanOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const uranusOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const neptuneOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const plutoOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
@@ -350,6 +360,11 @@ saturnRing.rotation.y =  0.25;
 saturnRing.position.set(49500, 0, 0);
 saturnRing.receiveShadow = true;
 
+const titan = new THREE.Mesh(titanGeometrySphere, titanMaterialSphere);
+titan.position.set(2475, 0, 0);
+titan.castShadow = true;
+titan.receiveShadow = true;
+
 const uranus = new THREE.Mesh(uranusGeometrySphere, uranusMaterialSphere);
 uranus.position.set(99000, 0, 0);
 uranus.castShadow = true;
@@ -392,6 +407,9 @@ jupiterOrbit.rotation.x = Math.PI / 2;
 const saturnOrbit = new THREE.Mesh(saturnOrbitRing, saturnOrbitMaterial);
 saturnOrbit.rotation.x = Math.PI / 2;
 
+const titanOrbit = new THREE.Mesh(titanOrbitRing, titanOrbitMaterial);
+titanOrbit.rotation.x = Math.PI / 2;
+
 const uranusOrbit = new THREE.Mesh(uranusOrbitRing, uranusOrbitMaterial);
 uranusOrbit.rotation.x = Math.PI / 2;
 
@@ -412,29 +430,37 @@ moonSystem.rotation.x = Math.PI * 0.028;
 const marsPivot = new THREE.Object3D();
 const jupiterPivot = new THREE.Object3D();
 const saturnPivot = new THREE.Object3D();
+const titanPivot = new THREE.Object3D();
 const uranusPivot = new THREE.Object3D();
 const neptunePivot = new THREE.Object3D();
 const plutoPivot = new THREE.Object3D();
+
+// Add celestial bodies to the scene
 scene.add(mercuryPivot);
 scene.add(venusPivot);
 scene.add(earthPivot);
 earth.add(moonSystem);
 moonSystem.add(moonOrbit);
 moonSystem.add(moonPivot);
-moonPivot.add(moon);
 scene.add(marsPivot);
 scene.add(jupiterPivot);
 scene.add(saturnPivot);
 scene.add(uranusPivot);
 scene.add(neptunePivot);
 scene.add(plutoPivot);
+
+// Add celestial bodies to their respective pivots
 mercuryPivot.add(mercury);
 venusPivot.add(venus);
 earthPivot.add(earth);
+moonPivot.add(moon);
 marsPivot.add(mars);
 jupiterPivot.add(jupiter);
 saturnPivot.add(saturn);
 saturnPivot.add(saturnRing);
+titanPivot.add(titanOrbit);
+titanPivot.add(titan);
+saturn.add(titanPivot);
 uranusPivot.add(uranus);
 uranusPivot.add(uranusRing);
 neptunePivot.add(neptune);
@@ -447,6 +473,7 @@ moonPivot.rotation.y += randomInt(0, 360);
 marsPivot.rotation.y += randomInt(0, 360);
 jupiterPivot.rotation.y += randomInt(0, 360);
 saturnPivot.rotation.y += randomInt(0, 360);
+titanPivot.rotation.y += randomInt(0, 360);
 uranusPivot.rotation.y += randomInt(0, 360);
 neptunePivot.rotation.y += randomInt(0, 360);
 plutoPivot.rotation.y += randomInt(0, 360);
@@ -459,6 +486,7 @@ const orbitalSpeeds = {
   mars: 0.128,
   jupiter: 0.0203,
   saturn: 0.00818,
+  titan: 0.0006,
   uranus: 0.00287,
   neptune: 0.00146,
   moon: 0.5,
@@ -479,6 +507,7 @@ function animate() {
   marsPivot.rotation.y += orbitalSpeeds.mars * speedOrbit;
   jupiterPivot.rotation.y += orbitalSpeeds.jupiter * speedOrbit;
   saturnPivot.rotation.y += orbitalSpeeds.saturn * speedOrbit;
+  titanPivot.rotation.y += orbitalSpeeds.titan * speedOrbit;
   uranusPivot.rotation.y += orbitalSpeeds.uranus * speedOrbit;
   neptunePivot.rotation.y += orbitalSpeeds.neptune * speedOrbit;
   plutoPivot.rotation.y += orbitalSpeeds.pluto * speedOrbit;
@@ -491,7 +520,8 @@ function animate() {
   moon.rotation.y += (orbitalSpeeds.moon * 0.01) / speedSlower;; 
   mars.rotation.y += 0.0097 / speedSlower;     
   jupiter.rotation.y += 0.024 / speedSlower;    
-  saturn.rotation.y += 0.022 / speedSlower;    
+  saturn.rotation.y += 0.022 / speedSlower; 
+  titan.rotation.y = titanPivot.rotation.y; 
   uranus.rotation.y += 0.017 / speedSlower;     
   neptune.rotation.y += 0.018 / speedSlower; 
   pluto.rotation.y += 0.004 / speedSlower;   
@@ -524,6 +554,7 @@ export const celestialBodies = {
   mars,
   jupiter,
   saturn,
+  titan,
   uranus,
   neptune,
   pluto
