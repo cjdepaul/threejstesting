@@ -229,9 +229,14 @@ const moonOrbitRing = new THREE.RingGeometry(50, 51, 256);
 const marsOrbitRing = new THREE.RingGeometry(7900, 7901, 256);
 // Large gap for asteroid belt
 const jupiterOrbitRing = new THREE.RingGeometry(27000, 27001, 256);
+
+
 const saturnOrbitRing = new THREE.RingGeometry(49500, 49501, 256);
 const enceladusOrbitRing = new THREE.RingGeometry(429.9, 430.1, 256);
 const titanOrbitRing = new THREE.RingGeometry(2474.8, 2475.2, 256); 
+
+
+
 const uranusOrbitRing = new THREE.RingGeometry(99000, 99001, 512);
 const neptuneOrbitRing = new THREE.RingGeometry(155000, 155001, 1024);
 const plutoOrbitRing = new THREE.RingGeometry(203000, 203001, 2048);
