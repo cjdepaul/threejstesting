@@ -179,7 +179,7 @@ const neptuneGeometrySphere = new THREE.SphereGeometry(49.5, 32, 32);
 const plutoGeometrySphere = new THREE.SphereGeometry(2.3, 32, 32);         
 
 // Asteroid Belt
-const asteroidCount = 10000;
+const asteroidCount = 1000;
 const asteroidBeltGeometry = new THREE.BufferGeometry();
 const asteroidPositions = [];
 const asteroidColors = [];
