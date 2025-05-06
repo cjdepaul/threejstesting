@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const pos = getPosition(body);
             camera.position.set(pos.x - 200, pos.y + 200, pos.z + 200);
             camera.lookAt(pos.x, pos.y, pos.z);
-        }, 16);
+        }, 1);
         updateFollowButtons();
     }
 
