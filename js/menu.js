@@ -92,7 +92,11 @@ document.addEventListener('DOMContentLoaded', function() {
         followingBody = bodyName;
         followInterval = setInterval(() => {
             const pos = getPosition(body);
-            camera.position.set(pos.x - 200, pos.y + 200, pos.z + 200);
+            const time = Date.now() * 0.00025; 
+            const radius = 280; 
+            const x = pos.x + radius * Math.cos(time);
+            const z = pos.z + radius * Math.sin(time);
+            camera.position.set(x, pos.y + 200, z);
             camera.lookAt(pos.x, pos.y, pos.z);
         }, 1);
         updateFollowButtons();
