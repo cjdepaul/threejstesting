@@ -106,6 +106,7 @@ document.addEventListener('keydown', (event) => {
   camera.getWorldDirection(direction);
 
   switch(event.key.toLowerCase()) {
+    // Movement controls
     case 'w':
       camera.position.addScaledVector(direction, currentSpeed);
       break;
@@ -123,6 +124,20 @@ document.addEventListener('keydown', (event) => {
       break;
     case 'shift':
       camera.position.y -= currentSpeed;
+      break;
+    // Zoom in and out
+    case 'z':
+      camera.fov = Math.max(camera.fov - 1, 1); 
+      camera.updateProjectionMatrix(); 
+      break;
+    case 'x':
+      camera.fov = Math.min(camera.fov + 1, 100);
+      camera.updateProjectionMatrix();
+      break;
+    // Reset camera FOV
+    case 'r':
+      camera.fov = 75; 
+      camera.updateProjectionMatrix(); 
       break;
   }
 });
