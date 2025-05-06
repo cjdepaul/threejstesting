@@ -162,7 +162,7 @@ for (let i = 0; i < pos.count; i++) {
 }
 // Saturns moons
 const titanGeometrySphere = new THREE.SphereGeometry(5, 32, 32);
-
+const enceladusGeometrySphere = new THREE.SphereGeometry(1, 32, 32);
 
 
 const uranusGeometrySphere = new THREE.SphereGeometry(51, 32, 32);         
@@ -230,7 +230,8 @@ const marsOrbitRing = new THREE.RingGeometry(7900, 7901, 256);
 // Large gap for asteroid belt
 const jupiterOrbitRing = new THREE.RingGeometry(27000, 27001, 256);
 const saturnOrbitRing = new THREE.RingGeometry(49500, 49501, 256);
-const titanOrbitRing = new THREE.RingGeometry(2475, 2476, 256); 
+const enceladusOrbitRing = new THREE.RingGeometry(429.9, 430.1, 256);
+const titanOrbitRing = new THREE.RingGeometry(2474.8, 2475.2, 256); 
 const uranusOrbitRing = new THREE.RingGeometry(99000, 99001, 512);
 const neptuneOrbitRing = new THREE.RingGeometry(155000, 155001, 1024);
 const plutoOrbitRing = new THREE.RingGeometry(203000, 203001, 2048);
@@ -245,6 +246,7 @@ const marsTexture = new THREE.TextureLoader().load('images/textures/mars.jpg');
 const jupiterTexture = new THREE.TextureLoader().load('images/textures/jupiter.jpg');
 const saturnTexture = new THREE.TextureLoader().load('images/textures/saturn.jpg');
 const saturnRingTexture = new THREE.TextureLoader().load('images/textures/saturnsrings.png');
+const enceladusTexture = new THREE.TextureLoader().load('images/textures/enceladus.jpg');
 const titanTexture = new THREE.TextureLoader().load('images/textures/titan.webp');
 const uranusTexture = new THREE.TextureLoader().load('images/textures/uranus.jpg');
 const uranusRingTexture = new THREE.TextureLoader().load('images/textures/uranusrings.png');
@@ -265,6 +267,7 @@ const saturnRingMaterial = new THREE.MeshPhysicalMaterial({
     side: THREE.DoubleSide,
     transparent: true
 });
+const enceladusMaterialSphere = new THREE.MeshPhysicalMaterial({map: enceladusTexture});
 const titanMaterialSphere = new THREE.MeshPhysicalMaterial({map: titanTexture});
 const uranusMaterialSphere = new THREE.MeshPhysicalMaterial({map: uranusTexture});
 const uranusRingMaterial = new THREE.MeshPhysicalMaterial({
@@ -283,6 +286,7 @@ const moonOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: TH
 const marsOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const jupiterOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const saturnOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+const enceladusOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const titanOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const uranusOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
 const neptuneOrbitMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
@@ -360,10 +364,17 @@ saturnRing.rotation.y =  0.25;
 saturnRing.position.set(49500, 0, 0);
 saturnRing.receiveShadow = true;
 
+const enceladus = new THREE.Mesh(enceladusGeometrySphere, enceladusMaterialSphere);
+enceladus.position.set(430, 0, 0);
+enceladus.castShadow = true;
+enceladus.receiveShadow = true;
+
 const titan = new THREE.Mesh(titanGeometrySphere, titanMaterialSphere);
 titan.position.set(2475, 0, 0);
 titan.castShadow = true;
 titan.receiveShadow = true;
+
+
 
 const uranus = new THREE.Mesh(uranusGeometrySphere, uranusMaterialSphere);
 uranus.position.set(99000, 0, 0);
@@ -407,6 +418,9 @@ jupiterOrbit.rotation.x = Math.PI / 2;
 const saturnOrbit = new THREE.Mesh(saturnOrbitRing, saturnOrbitMaterial);
 saturnOrbit.rotation.x = Math.PI / 2;
 
+const enceladusOrbit = new THREE.Mesh(enceladusOrbitRing, enceladusOrbitMaterial);
+enceladusOrbit.rotation.x = Math.PI / 2;
+
 const titanOrbit = new THREE.Mesh(titanOrbitRing, titanOrbitMaterial);
 titanOrbit.rotation.x = Math.PI / 2;
 
@@ -430,6 +444,7 @@ moonSystem.rotation.x = Math.PI * 0.028;
 const marsPivot = new THREE.Object3D();
 const jupiterPivot = new THREE.Object3D();
 const saturnPivot = new THREE.Object3D();
+const enceladusPivot = new THREE.Object3D();
 const titanPivot = new THREE.Object3D();
 const uranusPivot = new THREE.Object3D();
 const neptunePivot = new THREE.Object3D();
@@ -461,6 +476,9 @@ saturnPivot.add(saturnRing);
 titanPivot.add(titanOrbit);
 titanPivot.add(titan);
 saturn.add(titanPivot);
+enceladusPivot.add(enceladusOrbit);
+enceladusPivot.add(enceladus);
+saturn.add(enceladusPivot)
 uranusPivot.add(uranus);
 uranusPivot.add(uranusRing);
 neptunePivot.add(neptune);
@@ -487,6 +505,7 @@ const orbitalSpeeds = {
   jupiter: 0.0203,
   saturn: 0.00818,
   titan: 0.0006,
+  enceladus: 0.0004,
   uranus: 0.00287,
   neptune: 0.00146,
   moon: 0.5,
@@ -508,6 +527,7 @@ function animate() {
   jupiterPivot.rotation.y += orbitalSpeeds.jupiter * speedOrbit;
   saturnPivot.rotation.y += orbitalSpeeds.saturn * speedOrbit;
   titanPivot.rotation.y += orbitalSpeeds.titan * speedOrbit;
+  enceladusPivot.rotation.y += orbitalSpeeds.enceladus * speedOrbit;
   uranusPivot.rotation.y += orbitalSpeeds.uranus * speedOrbit;
   neptunePivot.rotation.y += orbitalSpeeds.neptune * speedOrbit;
   plutoPivot.rotation.y += orbitalSpeeds.pluto * speedOrbit;
@@ -554,6 +574,7 @@ export const celestialBodies = {
   mars,
   jupiter,
   saturn,
+  enceladus,
   titan,
   uranus,
   neptune,
