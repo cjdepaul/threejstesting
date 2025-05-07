@@ -2,6 +2,20 @@ function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function initMoons() {
+
+  for (const moons in moonOrbits) {
+    const moonData = moonOrbits[moons];
+    const center = moonData.center.position;
+    const pivot = moonData.pivot;
+    const speed = moonData.speed;
+
+    pivot.position.x = center.x;
+    pivot.position.y = center.y;
+    pivot.position.z = center.z;
+  }
+}
+
 let currentSpeed = 50;
 let currentSensitivity = 50;
 
@@ -453,16 +467,12 @@ const mercuryPivot = new THREE.Object3D();
 const venusPivot = new THREE.Object3D();
 const earthPivot = new THREE.Object3D();
 const moonPivot = new THREE.Object3D();
-const moonSystem = new THREE.Object3D();
-moonSystem.rotation.x = THREE.MathUtils.degToRad(5);
 const marsPivot = new THREE.Object3D();
 const jupiterPivot = new THREE.Object3D();
 const saturnPivot = new THREE.Object3D();
 const enceladusPivot = new THREE.Object3D();
 const titanPivot = new THREE.Object3D();
 const mimasPivot = new THREE.Object3D();
-const mimasSystem = new THREE.Object3D();
-mimasSystem.rotation.x = THREE.MathUtils.degToRad(1.5);
 const uranusPivot = new THREE.Object3D();
 const neptunePivot = new THREE.Object3D();
 const plutoPivot = new THREE.Object3D();
@@ -477,11 +487,18 @@ const orbitalTilts = {
   saturn: 2.5,
   titan: 0.3,
   enceladus: 1.6,
-  mimas: 45,
+  mimas: 0.9,
   uranus: 97.8,  
   neptune: 1.8,
   pluto: 17.2
 };
+
+// Apply tilts to moons
+moonPivot.rotation.x = THREE.MathUtils.degToRad(orbitalTilts.moon);
+titanPivot.rotation.x = THREE.MathUtils.degToRad(orbitalTilts.titan);
+enceladusPivot.rotation.x = THREE.MathUtils.degToRad(orbitalTilts.enceladus);
+mimasPivot.rotation.x = THREE.MathUtils.degToRad(orbitalTilts.mimas);
+
 
 // Function to apply tilt to orbit ring and pivot
 function applyTilt(pivot, orbitRing, tiltAngle) {
@@ -508,9 +525,6 @@ applyTilt(plutoPivot, plutoOrbit, orbitalTilts.pluto);
 scene.add(mercuryPivot);
 scene.add(venusPivot);
 scene.add(earthPivot);
-earth.add(moonSystem);
-moonSystem.add(moonOrbit);
-moonSystem.add(moonPivot);
 scene.add(marsPivot);
 scene.add(jupiterPivot);
 scene.add(saturnPivot);
@@ -522,25 +536,28 @@ scene.add(plutoPivot);
 mercuryPivot.add(mercury);
 venusPivot.add(venus);
 earthPivot.add(earth);
-moonPivot.add(moon);
 marsPivot.add(mars);
 jupiterPivot.add(jupiter);
 saturnPivot.add(saturn);
 saturnPivot.add(saturnRing);
-titanPivot.add(titanOrbit);
-titanPivot.add(titan);
-saturn.add(titanPivot);
-enceladusPivot.add(enceladusOrbit);
-enceladusPivot.add(enceladus);
-saturn.add(enceladusPivot)
-saturn.add(mimasSystem);
-mimasSystem.add(mimasOrbit);
-mimasSystem.add(mimasPivot);
-mimasPivot.add(mimas);
 uranusPivot.add(uranus);
 uranusPivot.add(uranusRing);
 neptunePivot.add(neptune);
 plutoPivot.add(pluto);
+// add moons to their respective planets pivots and own pivots
+moonPivot.add(moonOrbit);
+moonPivot.add(moon);
+earthPivot.add(moonPivot);
+titanPivot.add(titanOrbit);
+titanPivot.add(titan);
+saturnPivot.add(titanPivot);
+enceladusPivot.add(enceladusOrbit);
+enceladusPivot.add(enceladus);
+saturnPivot.add(enceladusPivot);
+mimasPivot.add(mimasOrbit);
+mimasPivot.add(mimas);
+saturnPivot.add(mimasPivot);
+
 
 mercuryPivot.rotation.y += randomInt(0, 360);
 venusPivot.rotation.y += randomInt(0, 360);
@@ -564,14 +581,33 @@ const orbitalSpeeds = {
   mars: 0.128,
   jupiter: 0.0203,
   saturn: 0.00818,
-  titan: 0.0026041667,
-  enceladus: 0.03125,
-  mimas: 0.1625,
   uranus: 0.00287,
   neptune: 0.00146,
   moon: 0.5,
   pluto: 0.0005
 };
+
+const moonOrbits = {
+  moon: {center: earth, pivot: moonPivot, speed: 0.005},
+  titan: {center: saturn, pivot: titanPivot, speed: 0.00026041667},
+  enceladus: {center: saturn, pivot: enceladusPivot, speed: 0.003125},
+  mimas: {center: saturn, pivot: mimasPivot, speed: 0.001625}
+};
+
+initMoons();
+
+function updateMoons() {
+  for (const moons in moonOrbits) {
+    const moonData = moonOrbits[moons];
+    const pivot = moonData.pivot;
+    const speed = moonData.speed;
+
+    pivot.rotation.y += speed; // Adjust the speed based on the current speed
+  }
+
+}
+
+
 
 function animate() {
   requestAnimationFrame(animate);
@@ -583,17 +619,14 @@ function animate() {
   mercuryPivot.rotation.y += orbitalSpeeds.mercury * speedOrbit;
   venusPivot.rotation.y += orbitalSpeeds.venus * speedOrbit;
   earthPivot.rotation.y += orbitalSpeeds.earth * speedOrbit;
-  moonPivot.rotation.y += orbitalSpeeds.moon * speedOrbit;
   marsPivot.rotation.y += orbitalSpeeds.mars * speedOrbit;
   jupiterPivot.rotation.y += orbitalSpeeds.jupiter * speedOrbit;
   saturnPivot.rotation.y += orbitalSpeeds.saturn * speedOrbit;
-  titanPivot.rotation.y += orbitalSpeeds.titan * speedOrbit;
-  enceladusPivot.rotation.y += orbitalSpeeds.enceladus * speedOrbit;
-  mimasPivot.rotation.y += orbitalSpeeds.mimas * speedOrbit;
   uranusPivot.rotation.y += orbitalSpeeds.uranus * speedOrbit;
   neptunePivot.rotation.y += orbitalSpeeds.neptune * speedOrbit;
   plutoPivot.rotation.y += orbitalSpeeds.pluto * speedOrbit;
 
+  updateMoons();
   // adds rotation to the planets
   const speedSlower = 4
   mercury.rotation.y += 0.0059 / speedSlower;  
