@@ -602,7 +602,7 @@ function updateMoons() {
     const pivot = moonData.pivot;
     const speed = moonData.speed;
 
-    pivot.rotation.y += speed; // Adjust the speed based on the current speed
+    pivot.rotation.y += speed;
   }
 
 }
