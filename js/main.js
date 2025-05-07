@@ -467,6 +467,43 @@ const uranusPivot = new THREE.Object3D();
 const neptunePivot = new THREE.Object3D();
 const plutoPivot = new THREE.Object3D();
 
+const orbitalTilts = {
+  mercury: 7.0,
+  venus: 3.4,
+  earth: 0,
+  moon: 5.1,
+  mars: 1.9,
+  jupiter: 1.3,
+  saturn: 2.5,
+  titan: 0.3,
+  enceladus: 1.6,
+  mimas: 45,
+  uranus: 97.8,  
+  neptune: 1.8,
+  pluto: 17.2
+};
+
+// Function to apply tilt to orbit ring and pivot
+function applyTilt(pivot, orbitRing, tiltAngle) {
+  const tiltRad = THREE.MathUtils.degToRad(tiltAngle);
+  pivot.rotation.x = tiltRad;
+  if (orbitRing) {
+    orbitRing.rotation.x = Math.PI / 2 + tiltRad;
+  }
+}
+
+// Apply tilts to planet systems
+applyTilt(mercuryPivot, mercuryOrbit, orbitalTilts.mercury);
+applyTilt(venusPivot, venusOrbit, orbitalTilts.venus);
+applyTilt(earthPivot, earthOrbit, orbitalTilts.earth);
+applyTilt(marsPivot, marsOrbit, orbitalTilts.mars);
+applyTilt(jupiterPivot, jupiterOrbit, orbitalTilts.jupiter);
+applyTilt(saturnPivot, saturnOrbit, orbitalTilts.saturn);
+applyTilt(uranusPivot, uranusOrbit, orbitalTilts.uranus);
+applyTilt(neptunePivot, neptuneOrbit, orbitalTilts.neptune);
+applyTilt(plutoPivot, plutoOrbit, orbitalTilts.pluto);
+
+
 // Add celestial pivots to the scene
 scene.add(mercuryPivot);
 scene.add(venusPivot);
