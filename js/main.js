@@ -493,6 +493,20 @@ const orbitalTilts = {
   pluto: 17.2
 };
 
+const orbitalSpeeds = {
+  mercury: 1,
+  venus: 0.391,
+  earth: 0.241,
+  mars: 0.128,
+  jupiter: 0.0203,
+  saturn: 0.00818,
+  uranus: 0.00287,
+  neptune: 0.00146,
+  moon: 0.5,
+  pluto: 0.0005
+};
+
+
 // Apply tilts to moons
 moonPivot.rotation.x = THREE.MathUtils.degToRad(orbitalTilts.moon);
 titanPivot.rotation.x = THREE.MathUtils.degToRad(orbitalTilts.titan);
@@ -573,24 +587,10 @@ uranusPivot.rotation.y += randomInt(0, 360);
 neptunePivot.rotation.y += randomInt(0, 360);
 plutoPivot.rotation.y += randomInt(0, 360);
 
-
-const orbitalSpeeds = {
-  mercury: 1,
-  venus: 0.391,
-  earth: 0.241,
-  mars: 0.128,
-  jupiter: 0.0203,
-  saturn: 0.00818,
-  uranus: 0.00287,
-  neptune: 0.00146,
-  moon: 0.5,
-  pluto: 0.0005
-};
-
 const moonOrbits = {
   moon: {center: earth, pivot: moonPivot, speed: 0.005},
-  titan: {center: saturn, pivot: titanPivot, speed: 0.00026041667},
-  enceladus: {center: saturn, pivot: enceladusPivot, speed: 0.003125},
+  titan: {center: saturn, pivot: titanPivot, speed: 0.000026041667},
+  enceladus: {center: saturn, pivot: enceladusPivot, speed: 0.0008},
   mimas: {center: saturn, pivot: mimasPivot, speed: 0.001625}
 };
 
@@ -606,8 +606,6 @@ function updateMoons() {
   }
 
 }
-
-
 
 function animate() {
   requestAnimationFrame(animate);
