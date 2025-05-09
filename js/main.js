@@ -170,42 +170,46 @@ document.addEventListener('keydown', (event) => {
 
 // container of celestial bodies
 
-const celestialBodiesData = {
-  stars: {
-    sun: {radius: 1390, texture: "sun.jpg", rotationSpeed: 0.001},
+const celestialBodiesWIP = {
+  data: {
+    stars: {
+      sun: {radius: 1390, texture: "sun.jpg", rotationSpeed: 0.001},
+    },
+    planets: {
+      mercury: {radius: 4.9, orbitRadius: 2000, texture: "mercury.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0059, orbitSpeed: 1, tilt: 7.0},
+      venus: {radius: 12.1, orbitRadius: 3700, texture: "venus.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0014, orbitSpeed: 0.391, tilt: 3.4},
+      earth: {radius: 12.7, orbitRadius: 5200, texture: "earth.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.02, orbitSpeed: 0.241, tilt: 0},
+      mars: {radius: 6.8, orbitRadius: 7900, texture: "mars.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0097, orbitSpeed: 0.128, tilt: 1.9},
+      jupiter: {radius: 139, orbitRadius: 27000, texture: "jupiter.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.024, orbitSpeed: 0.0203, tilt: 1.3},
+      saturn: {radius: 116, orbitRadius: 49500, texture: "saturn.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.022, orbitSpeed: 0.00818, tilt: 2.5, ring: {innerRadius: 140, outerRadius: 270, texture: "saturnsrings.png"}},
+      uranus: {radius: 51, orbitRadius: 99000, texture: "uranus.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.017, orbitSpeed: 0.00287, tilt: 97.8, ring: {innerRadius: 65, outerRadius: 102, texture: "uranusrings.png"}}, 
+      neptune: {radius: 49.5, orbitRadius: 155000, texture: "neptune.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.018, orbitSpeed: 0.00146, tilt: 1.8},
+      pluto: {radius: 2.3, orbitRadius: 203000, texture: "pluto.webp", pivot: new THREE.Object3D(), rotationSpeed: 0.004, orbitSpeed: 0.0005, tilt: 17.2},
+    },
+    moons: {
+      moon: {radius: 3.5, orbitRadius: 50, texture: "moon.jpg", pivot: new THREE.Object3D(), mainPlanet: "earth", rotationSpeed: 0.0059, orbitSpeed: 0.5, tilt: 5.1},
+      titan: {radius: 5, orbitRadius: 2475, texture: "titan.webp", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.000026041667, tilt: 0.3},
+      enceladus: {radius: 1, orbitRadius: 430, texture: "enceladus.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.0008, tilt: 1.6},
+      mimas: {radius: 1, orbitRadius: 370, texture: "mimas.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.001625, tilt: 0.9},
+    }
   },
-  planets: {
-    mercury: {radius: 4.9, orbitRadius: 2000, texture: "mercury.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0059, orbitSpeed: 1, tilt: 7.0},
-    venus: {radius: 12.1, orbitRadius: 3700, texture: "venus.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0014, orbitSpeed: 0.391, tilt: 3.4},
-    earth: {radius: 12.7, orbitRadius: 5200, texture: "earth.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.02, orbitSpeed: 0.241, tilt: 0},
-    mars: {radius: 6.8, orbitRadius: 7900, texture: "mars.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0097, orbitSpeed: 0.128, tilt: 1.9},
-    jupiter: {radius: 139, orbitRadius: 27000, texture: "jupiter.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.024, orbitSpeed: 0.0203, tilt: 1.3},
-    saturn: {radius: 116, orbitRadius: 49500, texture: "saturn.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.022, orbitSpeed: 0.00818, tilt: 2.5, ring: {innerRadius: 140, outerRadius: 270, texture: "saturnsrings.png"}},
-    uranus: {radius: 51, orbitRadius: 99000, texture: "uranus.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.017, orbitSpeed: 0.00287, tilt: 97.8, ring: {innerRadius: 65, outerRadius: 102, texture: "uranusrings.png"}}, 
-    neptune: {radius: 49.5, orbitRadius: 155000, texture: "neptune.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.018, orbitSpeed: 0.00146, tilt: 1.8},
-    pluto: {radius: 2.3, orbitRadius: 203000, texture: "pluto.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.004, orbitSpeed: 0.0005, tilt: 17.2},
-  },
-  moons: {
-    moon: {radius: 3.5, orbitRadius: 50, texture: "moon.jpg", pivot: new THREE.Object3D(), mainPlanet: "earth", rotationSpeed: 0.0059, orbitSpeed: 0.5, tilt: 5.1},
-    titan: {radius: 5, orbitRadius: 2475, texture: "titan.webp", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.000026041667, tilt: 0.3},
-    enceladus: {radius: 1, orbitRadius: 430, texture: "enceladus.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.0008, tilt: 1.6},
-    mimas: {radius: 1, orbitRadius: 370, texture: "mimas.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.001625, tilt: 0.9},
-  }
+  geometries: {stars: {}, planets: {}, moons: {}},
+  materials: {stars: {}, planets: {}, moons: {}},
+  meshes: {stars: {}, planets: {}, moons: {}},
+  orbitRings: {planets: {}, moons: {}}
 };
-
-let celestialBodiesWIP = {};
 
 function initGeometries() {
   let pos;
   let v3;
-  for (const celestialType in celestialBodiesData) {
-    celestialBodiesWIP[celestialType] = {};
-    for (const celestialName in celestialBodiesData[celestialType]) {
-      const data = celestialBodiesData[celestialType][celestialName];
+  for (const celestialType in celestialBodiesWIP['data']) {
+    celestialBodiesWIP['geometries'][celestialType] = {};
+    for (const celestialName in celestialBodiesWIP['data'][celestialType]) {
+      const data = celestialBodiesWIP['data'][celestialType][celestialName];
       if (celestialType === 'moons') {
-        celestialBodiesWIP[celestialType][celestialName] = new THREE.SphereGeometry(data.radius, 32, 32);
+        celestialBodiesWIP['geometries'][celestialType][celestialName] = new THREE.SphereGeometry(data.radius, 32, 32);
       } else if (celestialType === 'planets') {
-        celestialBodiesWIP[celestialType][celestialName] = new THREE.SphereGeometry(data.radius, 32, 32);
+        celestialBodiesWIP['geometries'][celestialType][celestialName] = new THREE.SphereGeometry(data.radius, 32, 32);
         if (data.ring) {
           const ringGeometry = new THREE.RingBufferGeometry(data.ring.innerRadius, data.ring.outerRadius, 64);
           pos = ringGeometry.attributes.position;
@@ -215,10 +219,10 @@ function initGeometries() {
             const u = (v3.length() - data.ring.innerRadius) / (data.ring.outerRadius - data.ring.innerRadius);
             const v = (i % 2);
             ringGeometry.attributes.uv.setXY(i, u, v);
-            celestialBodiesWIP[celestialType][celestialName].ring = ringGeometry;
+            celestialBodiesWIP['geometries'][celestialType][celestialName].ring = ringGeometry;
         }
       } else if (celestialType === 'stars') {
-        celestialBodiesWIP[celestialType][celestialName] = new THREE.SphereGeometry(data.radius, 32, 32);
+        celestialBodiesWIP['geometries'][celestialType][celestialName] = new THREE.SphereGeometry(data.radius, 32, 32);
       }
     }
     } 
@@ -227,12 +231,88 @@ function initGeometries() {
 
 initGeometries();
 
-// TODO: Initialize textures try and keep everything in celestialBodiesWIP
-// TODO: Initialize materials
-// TODO: Initialize meshes
-// TODO: Initialize orbits rings
+function initMaterials() {
+  for (const celestialType in celestialBodiesWIP['data']) {
+    celestialBodiesWIP['materials'][celestialType] = {};
+    for (const celestialName in celestialBodiesWIP['data'][celestialType]) {
+      const data = celestialBodiesWIP['data'][celestialType][celestialName];
+      if (celestialType === 'moons') {
+        celestialBodiesWIP['materials'][celestialType][celestialName] = new THREE.MeshPhysicalMaterial({map: new THREE.TextureLoader().load(`images/textures/${data.texture}`)});
+      } else if (celestialType === 'planets') {
+        celestialBodiesWIP['materials'][celestialType][celestialName] = new THREE.MeshPhysicalMaterial({map: new THREE.TextureLoader().load(`images/textures/${data.texture}`)});
+        if (data.ring) {
+          celestialBodiesWIP['materials'][celestialType][celestialName].ring = new THREE.MeshPhysicalMaterial({
+            map: new THREE.TextureLoader().load(`images/textures/${data.ring.texture}`),
+            side: THREE.DoubleSide,
+            transparent: true
+          });
+        }
+      } else if (celestialType === 'stars') {
+        celestialBodiesWIP['materials'][celestialType][celestialName] = new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(`images/textures/${data.texture}`)});
+      }
+    }
+  }
+}
+
+initMaterials();
+
+function initMeshes() {
+  let moonMesh, planetMesh;
+  for (const celestialType in celestialBodiesWIP['data']) {
+    celestialBodiesWIP['meshes'][celestialType] = {};
+    for (const celestialName in celestialBodiesWIP['data'][celestialType]) {
+      const data = celestialBodiesWIP['data'][celestialType][celestialName];
+      if (celestialType === 'moons') {
+        moonMesh = new THREE.Mesh(celestialBodiesWIP['geometries'][celestialType][celestialName], celestialBodiesWIP['materials'][celestialType][celestialName]);
+        moonMesh.castShadow = true;
+        moonMesh.receiveShadow = true;
+        moonMesh.position.set(data.orbitRadius, 0, 0);
+        celestialBodiesWIP['meshes'][celestialType][celestialName] = moonMesh;
+      } else if (celestialType === 'planets') {
+        planetMesh = new THREE.Mesh(celestialBodiesWIP['geometries'][celestialType][celestialName], celestialBodiesWIP['materials'][celestialType][celestialName]);
+        planetMesh.castShadow = true;
+        planetMesh.receiveShadow = true;
+        planetMesh.position.set(data.orbitRadius, 0, 0);
+        celestialBodiesWIP['meshes'][celestialType][celestialName] = planetMesh;
+        if (data.ring) {
+          celestialBodiesWIP['meshes'][celestialType][`${celestialName}Ring`] = new THREE.Mesh(celestialBodiesWIP['geometries'][celestialType][celestialName].ring, celestialBodiesWIP['materials'][celestialType][`${celestialName}Ring`]);
+        }
+      } else if (celestialType === 'stars') {
+        celestialBodiesWIP['meshes'][celestialType][celestialName] = new THREE.Mesh(celestialBodiesWIP['geometries'][celestialType][celestialName], celestialBodiesWIP['materials'][celestialType][celestialName]);
+      }
+    }
+  }
+}
+
+initMeshes();
+
+function initOrbitRings() {
+  let geometry, material;
+  material = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+  for (const celestialType in celestialBodiesWIP['data']) {
+    celestialBodiesWIP['orbitRings'][celestialType] = {};
+    for (const celestialName in celestialBodiesWIP['data'][celestialType]) {
+      const data = celestialBodiesWIP['data'][celestialType][celestialName];
+      if (celestialType === 'moons') {
+        geometry = new THREE.RingGeometry(data.orbitRadius - 0.1, data.orbitRadius + 0.1, 256);
+        celestialBodiesWIP['orbitRings'][celestialType][celestialName] = new THREE.Mesh(geometry, material);
+      } else if (celestialType === 'planets') {
+        geometry = new THREE.RingGeometry(data.orbitRadius - 0.5, data.orbitRadius + 0.5, 256);
+        celestialBodiesWIP['orbitRings'][celestialType][celestialName] = new THREE.Mesh(geometry, material);
+      }
+    }
+  }
+
+}
+
+initOrbitRings();
+
+// TODO: Initialize materials Done
+// TODO: Initialize meshes Done
+// TODO: Initialize orbits rings Done
 // TODO: Simplify animation things
 // TODO: Simplify adding things to scene
+// After structure is in place try and compress all geometry, material, and mesh creation into a single function
 
 // Geometries for celestial bodies and their respective parts
 const sunGeometrySphere = new THREE.SphereGeometry(1390, 32, 32);  
