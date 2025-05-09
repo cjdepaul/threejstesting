@@ -295,10 +295,10 @@ function initOrbitRings() {
       const data = celestialBodiesWIP['data'][celestialType][celestialName];
       if (celestialType === 'moons') {
         geometry = new THREE.RingGeometry(data.orbitRadius - 0.1, data.orbitRadius + 0.1, 256);
-        celestialBodiesWIP['orbitRings'][celestialType][celestialName] = new THREE.Mesh(geometry, material);
+        celestialBodiesWIP['orbitRings'][celestialType][celestialName] = new THREE.Mesh(geometry, material).rotation.set(Math.PI / 2, 0, 0);
       } else if (celestialType === 'planets') {
         geometry = new THREE.RingGeometry(data.orbitRadius - 0.5, data.orbitRadius + 0.5, 256);
-        celestialBodiesWIP['orbitRings'][celestialType][celestialName] = new THREE.Mesh(geometry, material);
+        celestialBodiesWIP['orbitRings'][celestialType][celestialName] = new THREE.Mesh(geometry, material).rotation.set(Math.PI / 2, 0, 0);
       }
     }
   }
