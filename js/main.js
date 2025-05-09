@@ -56,7 +56,7 @@ function initMaterials() {
 }
 
 function initMeshes() {
-  let moonMesh, planetMesh, ringMesh;
+  let moonMesh, planetMesh, ringMesh, moonpivot;
   for (const celestialType in celestialbodies['data']) {
     celestialbodies['meshes'][celestialType] = {};
     for (const celestialName in celestialbodies['data'][celestialType]) {
@@ -67,6 +67,7 @@ function initMeshes() {
         moonMesh.receiveShadow = true;
         moonMesh.position.set(data.orbitRadius, 0, 0);
         celestialbodies['meshes'][celestialType][celestialName] = moonMesh;
+        data.pivot.position.set(celestialbodies['data'][data.mainPlanet.position]);
       } else if (celestialType === 'planets') {
         planetMesh = new THREE.Mesh(celestialbodies['geometries'][celestialType][celestialName], celestialbodies['materials'][celestialType][celestialName]);
         planetMesh.castShadow = true;
@@ -124,18 +125,6 @@ function applyTilt() {
   }
 }
 
-function initMoons() {
-
-  for (const moons in moonOrbits) {
-    const moonData = moonOrbits[moons];
-    const center = moonData.center.position;
-    const pivot = moonData.pivot;
-
-    pivot.position.x = center.x;
-    pivot.position.y = center.y;
-    pivot.position.z = center.z;
-  }
-}
 
 let currentSpeed = 50;
 let currentSensitivity = 50;
