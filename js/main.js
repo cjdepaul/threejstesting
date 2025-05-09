@@ -125,6 +125,26 @@ function applyTilt() {
   }
 }
 
+function animate() {
+  // creates the orbit and rotation of the planets and moons
+  requestAnimationFrame(animate);
+  orbitSpeedAmp = 1;
+  rotationSpeedAmp = 1;
+  for (const celestialType in celestialbodies['data']){
+    for (const celestialName in celestialType){
+      const data = celestialType[celestialName];
+      if (celestialType === 'moons' || celestialType == 'planets'){
+        data.pivot.y += data.orbitSpeed * orbitSpeedAmp;
+        celestialbodies['meshes'][celestialType][celestialName].rotation.y += data.rotationSpeed * rotationSpeedAmp;
+      }
+      else {
+        celestialbodies['meshes'][celestialType][celestialName].rotation.y += data.rotationSpeed * rotationSpeedAmp;
+      }
+    }
+  }
+  asteroidBelt.rotation.y += 0.0001;
+
+}
 
 let currentSpeed = 50;
 let currentSensitivity = 50;
@@ -307,10 +327,10 @@ initOrbitRings();
 // TODO: Initialize materials Done
 // TODO: Initialize meshes Done
 // TODO: Initialize orbits rings Done
-// TODO: Simplify animation things
+// TODO: Simplify animation things Done
 // TODO: Simplify adding things to scene
-// After structure is in place try and compress all geometry, material, and mesh creation into a single function
 
+//inits sunlight
 const sunLights = [];
 const numberOfLights = 4;
 const sunRadius = celestialbodies['data']['stars']['sun'].radius;
@@ -339,7 +359,47 @@ for (let i = 0; i < numberOfLights; i++) {
     });
 }
 
+const asteroidCount = 1000;
+const asteroidBeltGeometry = new THREE.BufferGeometry();
+const asteroidPositions = [];
+const asteroidColors = [];
+const asteroidSizes = [];
 
+const minRadius = 11000; 
+const maxRadius = 23000;  
+const beltThickness = 2000;
+
+for (let i = 0; i < asteroidCount; i++) {
+    const radius = Math.random() * (maxRadius - minRadius) + minRadius;
+    const theta = Math.random() * Math.PI * 2;
+    const y = (Math.random() - 0.5) * beltThickness;
+
+    asteroidPositions.push(
+        radius * Math.cos(theta),
+        y,
+        radius * Math.sin(theta)
+    );
+
+    
+    const color = Math.random() * 0.4 + 0.4; // Range: 0.4 to 0.8
+    asteroidColors.push(color, color, color);
+
+    // Random size between 10 and 100
+    asteroidSizes.push(Math.random() * 90 + 10);
+}
+
+asteroidBeltGeometry.setAttribute('position', new THREE.Float32BufferAttribute(asteroidPositions, 3));
+asteroidBeltGeometry.setAttribute('color', new THREE.Float32BufferAttribute(asteroidColors, 3));
+asteroidBeltGeometry.setAttribute('size', new THREE.Float32BufferAttribute(asteroidSizes, 1));
+
+const asteroidMaterial = new THREE.PointsMaterial({
+    size: 1,
+    vertexColors: true,
+    sizeAttenuation: true
+});
+
+const asteroidBelt = new THREE.Points(asteroidBeltGeometry, asteroidMaterial);
+scene.add(asteroidBelt);
 
 
 
