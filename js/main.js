@@ -111,8 +111,8 @@ function initOrbitRings() {
 function applyTilt() {
   // Apply tilt to planets
   for (const planetName in celestialbodies['data']['planets']) {
-    const planetName = celestialbodies['data']['planets'][planetName];
-    const tiltRad = THREE.MathUtils.degToRad(planetName.tilt);
+    const planet = celestialbodies['data']['planets'][planetName];
+    const tiltRad = THREE.MathUtils.degToRad(planet.tilt);
     planetName.pivot.rotation.x = tiltRad;
     if (planetName.ring) {
       celestialbodies['meshes']['planets'][`${planetName}Ring`].rotation.x = Math.PI / 2 + tiltRad;
@@ -144,6 +144,33 @@ function animate() {
   }
   asteroidBelt.rotation.y += 0.0001;
 
+  renderer.render(scene, camera);
+}
+
+function addCelestialBodiesToScene() {
+  let pivot, data;
+  for (const celestialType in celestialbodies['data']) {
+    for (const celestialName in celestialType) {
+      if (celestialType === 'planets') {
+        pivot = celestialName.pivot;
+        scene.add(pivot);
+        scene.add(celestialbodies['orbitRings'][celestialType][celestialName]);
+        pivot.add(celestialbodies['meshes'][celestialType][celestialName]);
+        if (celestialName.ring) {
+          pivot.add(celestialbodies['meshes'][celestialType][`${celestialName}Ring`]);
+        }
+      }
+      else if (celestialType === 'moons') {
+        data = celestialbodies['data'][celestialType][celestialName];
+        data.pivot.add(celestialbodies['meshes'][celestialType][celestialName]);
+        data.pivot.add(celestialbodies['orbitRings'][celestialType][celestialName]);
+        celesitalbodies['data'][data.mainPlanet][pivot].add(data.pivot);
+      }
+      else if (celestialType === 'stars') {
+        scene.add(celestialbodies['meshes'][celestialType][celestialName]);
+      }
+    }
+  }
 }
 
 let currentSpeed = 50;
@@ -319,46 +346,6 @@ const celestialbodies = {
   orbitRings: {planets: {}, moons: {}}
 };
 
-initGeometries();
-initMaterials();
-initMeshes();
-initOrbitRings();
-
-// TODO: Initialize materials Done
-// TODO: Initialize meshes Done
-// TODO: Initialize orbits rings Done
-// TODO: Simplify animation things Done
-// TODO: Simplify adding things to scene
-
-//inits sunlight
-const sunLights = [];
-const numberOfLights = 4;
-const sunRadius = celestialbodies['data']['stars']['sun'].radius;
-const lightIntensity = 0.2;
-
-for (let i = 0; i < numberOfLights; i++) {
-    const angle = (i / numberOfLights) * Math.PI * 2;
-    const height = [-0.5, 0.5];
-    
-    height.forEach(h => {
-        const light = new THREE.PointLight(0xffffff, lightIntensity, 300000);
-        light.position.x = sunRadius * Math.cos(angle);
-        light.position.y = sunRadius * h;
-        light.position.z = sunRadius * Math.sin(angle);
-        
-        if (i < 2) { 
-            light.castShadow = true;
-            light.shadow.mapSize.width = 1024;
-            light.shadow.mapSize.height = 1024;
-            light.shadow.camera.near = 10;
-            light.shadow.camera.far = 300000;
-        }
-        
-        sunLights.push(light);
-        sun.add(light);
-    });
-}
-
 const asteroidCount = 1000;
 const asteroidBeltGeometry = new THREE.BufferGeometry();
 const asteroidPositions = [];
@@ -401,5 +388,84 @@ const asteroidMaterial = new THREE.PointsMaterial({
 const asteroidBelt = new THREE.Points(asteroidBeltGeometry, asteroidMaterial);
 scene.add(asteroidBelt);
 
+initGeometries();
+initMaterials();
+initMeshes();
+initOrbitRings();
+applyTilt();
+addCelestialBodiesToScene();
+
+//inits sunlight
+const sunLights = [];
+const numberOfLights = 4;
+const sunRadius = celestialbodies['data']['stars']['sun'].radius;
+const lightIntensity = 0.2;
+
+for (let i = 0; i < numberOfLights; i++) {
+    const angle = (i / numberOfLights) * Math.PI * 2;
+    const height = [-0.5, 0.5];
+    
+    height.forEach(h => {
+        const light = new THREE.PointLight(0xffffff, lightIntensity, 300000);
+        light.position.x = sunRadius * Math.cos(angle);
+        light.position.y = sunRadius * h;
+        light.position.z = sunRadius * Math.sin(angle);
+        
+        if (i < 2) { 
+            light.castShadow = true;
+            light.shadow.mapSize.width = 1024;
+            light.shadow.mapSize.height = 1024;
+            light.shadow.camera.near = 10;
+            light.shadow.camera.far = 300000;
+        }
+        
+        sunLights.push(light);
+        celesitalbodies['stars']['sun'].add(light);
+    });
+}
+
+animate();
+renderer.render(scene, camera);
+
+
+let celestialBodies;
+function initCelestialBodiesExport() {
+  for (const celestialType in celestialbodies['meshes']) {
+    for (const celestialName in celestialbodies['meshes'][celestialType]) {
+      celestialBodies[celestialName] = celestialbodies['meshes'][celestialType][celestialName];
+    }
+  }
+}
+
+initCelestialBodiesExport();
+
+  export {celestialBodies}; 
+  
+  export {camera};
+  
+  export function getPosition(celestialBody) {
+    const position = celestialBody.getWorldPosition(new THREE.Vector3());
+    return {
+      x: position.x,
+      y: position.y,
+      z: position.z
+    };
+  }
+  
+  export function updateSpeed(value) {
+    currentSpeed = value;
+  }
+  
+  export function updateSensitivity(value) {
+    currentSensitivity = value;
+  }
+  
+  export function getCurrentSpeed() {
+    return currentSpeed;
+  }
+  
+  export function getCurrentSensitivity() {
+    return currentSensitivity;
+  }
 
 
