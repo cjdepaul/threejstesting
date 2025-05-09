@@ -113,32 +113,37 @@ function applyTilt() {
   for (const planetName in celestialbodies['data']['planets']) {
     const planet = celestialbodies['data']['planets'][planetName];
     const tiltRad = THREE.MathUtils.degToRad(planet.tilt);
-    planetName.pivot.rotation.x = tiltRad;
-    if (planetName.ring) {
+    planet.pivot.rotation.x = tiltRad;
+    if (planet.ring) {
       celestialbodies['meshes']['planets'][`${planetName}Ring`].rotation.x = Math.PI / 2 + tiltRad;
     }
   }
 
   // Apply tilt to moons
   for (const moonName in celestialbodies['data']['moons']) {
-    moonName.pivot.rotation.x = THREE.MathUtils.degToRad(moonName.tilt);
+    const moon = celestialbodies['data']['moons'][moonName];
+    moon.pivot.rotation.x = THREE.MathUtils.degToRad(moonName.tilt);
   }
 }
 
 function animate() {
-  // creates the orbit and rotation of the planets and moons
   requestAnimationFrame(animate);
-  orbitSpeedAmp = 1;
-  rotationSpeedAmp = 1;
-  for (const celestialType in celestialbodies['data']){
-    for (const celestialName in celestialType){
-      const data = celestialType[celestialName];
-      if (celestialType === 'moons' || celestialType == 'planets'){
-        data.pivot.y += data.orbitSpeed * orbitSpeedAmp;
+  // creates the orbit and rotation of the planets and moons
+  let orbitSpeedAmp = 0.0001;
+  let rotationSpeedAmp = 0.0001;
+  let celestialType = null;
+  let celestialName = null;
+  for (celestialType in celestialbodies['data']){
+    for (celestialName in celestialbodies['data'][celestialType]){
+      const data = celestialbodies['data'][celestialType][celestialName];
+      if (celestialType === 'moons' || celestialType === 'planets'){
+        data.pivot.rotation.y += data.orbitSpeed * orbitSpeedAmp;
         celestialbodies['meshes'][celestialType][celestialName].rotation.y += data.rotationSpeed * rotationSpeedAmp;
       }
       else {
-        celestialbodies['meshes'][celestialType][celestialName].rotation.y += data.rotationSpeed * rotationSpeedAmp;
+        if (celestialbodies['meshes'][celestialType][celestialName]) {
+          celestialbodies['meshes'][celestialType][celestialName].rotation.y += data.rotationSpeed * rotationSpeedAmp;
+        }
       }
     }
   }
@@ -148,23 +153,26 @@ function animate() {
 }
 
 function addCelestialBodiesToScene() {
-  let pivot, data;
-  for (const celestialType in celestialbodies['data']) {
-    for (const celestialName in celestialType) {
+  let pivot, data, orbitring, celestialType, celestialName;
+  for (celestialType in celestialbodies['data']) {
+    for (celestialName in celestialbodies['data'][celestialType]) {
+      data = celestialbodies['data'][celestialType][celestialName];
       if (celestialType === 'planets') {
-        pivot = celestialName.pivot;
+        pivot = data.pivot;
+        orbitring = celestialbodies['orbitRings'][celestialType][celestialName];
         scene.add(pivot);
-        scene.add(celestialbodies['orbitRings'][celestialType][celestialName]);
+        scene.add(orbitring);
         pivot.add(celestialbodies['meshes'][celestialType][celestialName]);
         if (celestialName.ring) {
           pivot.add(celestialbodies['meshes'][celestialType][`${celestialName}Ring`]);
         }
       }
       else if (celestialType === 'moons') {
-        data = celestialbodies['data'][celestialType][celestialName];
+        pivot = data.pivot;
+        orbitring = celestialbodies['orbitRings'][celestialType][celestialName];
         data.pivot.add(celestialbodies['meshes'][celestialType][celestialName]);
-        data.pivot.add(celestialbodies['orbitRings'][celestialType][celestialName]);
-        celesitalbodies['data'][data.mainPlanet][pivot].add(data.pivot);
+        data.pivot.add(orbitring);
+        celestialbodies['data']['planets'][data.mainPlanet].pivot.add(data.pivot);
       }
       else if (celestialType === 'stars') {
         scene.add(celestialbodies['meshes'][celestialType][celestialName]);
@@ -235,7 +243,7 @@ document.addEventListener('mousemove', (event) => {
       y: event.clientY - previousMousePosition.y
     };
     
-    const sensitivity = (currentSensitivity / 5000); // Scale down the sensitivity
+    const sensitivity = (currentSensitivity / 5000); 
     yaw -= deltaMove.x * sensitivity;
     pitch -= deltaMove.y * sensitivity;
 
@@ -420,7 +428,7 @@ for (let i = 0; i < numberOfLights; i++) {
         }
         
         sunLights.push(light);
-        celesitalbodies['stars']['sun'].add(light);
+        celestialbodies['meshes']['stars']['sun'].add(light);
     });
 }
 
