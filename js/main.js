@@ -206,6 +206,13 @@ function addCelestialBodiesToScene() {
   }
 }
 
+function randomizePlanetPos() {
+  for (const planetName in celestialbodies['data']['planets']){
+    const pivot = celestialbodies['data']['planets'][planetName].pivot;
+    pivot.rotation.y += randomInt(0, 360);
+  }
+}
+
 let currentSpeed = 50;
 let currentSensitivity = 50;
 
@@ -427,6 +434,7 @@ initMeshes();
 initOrbitRings();
 applyTilt();
 addCelestialBodiesToScene();
+randomizePlanetPos();
 
 //inits sunlight
 const sunLights = [];
