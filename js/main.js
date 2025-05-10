@@ -57,52 +57,55 @@ function initMaterials() {
 }
 
 function initMeshes() {
-  let moonMesh, planetMesh, ringMesh, starMesh;
-  for (const celestialType in celestialbodies['data']) {
-    celestialbodies['meshes'][celestialType] = {};
-    for (const celestialName in celestialbodies['data'][celestialType]) {
-      const data = celestialbodies['data'][celestialType][celestialName];
-      if (celestialType === 'moons') {
-        moonMesh = new THREE.Mesh(
-          celestialbodies['geometries'][celestialType][celestialName],
-          celestialbodies['materials'][celestialType][celestialName]
-        );
-        moonMesh.castShadow = true;
-        moonMesh.receiveShadow = true;
-        moonMesh.position.set(data.orbitRadius, 0, 0);
-        data.pivot.position.set(celestialbodies['meshes']['planets'][data.mainPlanet].orbitRadius, 0, 0)
-        celestialbodies['meshes'][celestialType][celestialName] = moonMesh;
-      } else if (celestialType === 'planets') {
-        planetMesh = new THREE.Mesh(
-          celestialbodies['geometries'][celestialType][celestialName],
-          celestialbodies['materials'][celestialType][celestialName]
-        );
-        planetMesh.castShadow = true;
-        planetMesh.receiveShadow = true;
-        planetMesh.position.set(data.orbitRadius, 0, 0);
-        celestialbodies['meshes'][celestialType][celestialName] = planetMesh;
-        
-        if (data.ring) {
-          ringMesh = new THREE.Mesh(
-            celestialbodies['geometries'][celestialType][celestialName].ring,
-            celestialbodies['materials'][celestialType][`${celestialName}Ring`]
-          );
-          ringMesh.rotation.x = Math.PI / 2;
-          ringMesh.rotation.y = data.ring.ytilt;
-          ringMesh.position.set(0, 0, 0);
-          ringMesh.castShadow = true;
-          ringMesh.receiveShadow = true;
-          celestialbodies['meshes'][celestialType][`${celestialName}Ring`] = ringMesh;
-        }
-      } else if (celestialType === 'stars') {
-        starMesh = new THREE.Mesh(
-          celestialbodies['geometries'][celestialType][celestialName],
-          celestialbodies['materials'][celestialType][celestialName]
-        );
-        starMesh.position.set(0, 0, 0); 
-        celestialbodies['meshes'][celestialType][celestialName] = starMesh;
-      } 
+  for (const planetName in celestialbodies['data']['planets']) {
+    const data = celestialbodies['data']['planets'][planetName];
+    const planetMesh = new THREE.Mesh(
+      celestialbodies['geometries']['planets'][planetName],
+      celestialbodies['materials']['planets'][planetName]
+    );
+    planetMesh.castShadow = true;
+    planetMesh.receiveShadow = true;
+    planetMesh.position.set(data.orbitRadius, 0, 0);
+    celestialbodies['meshes']['planets'][planetName] = planetMesh;
+    
+    if (data.ring) {
+      const ringMesh = new THREE.Mesh(
+        celestialbodies['geometries']['planets'][planetName].ring,
+        celestialbodies['materials']['planets'][`${planetName}Ring`]
+      );
+      ringMesh.rotation.x = Math.PI / 2;
+      ringMesh.rotation.y = data.ring.ytilt;
+      ringMesh.position.set(0, 0, 0);
+      ringMesh.castShadow = true;
+      ringMesh.receiveShadow = true;
+      celestialbodies['meshes']['planets'][`${planetName}Ring`] = ringMesh;
     }
+  }
+
+  for (const moonName in celestialbodies['data']['moons']) {
+    const data = celestialbodies['data']['moons'][moonName];
+    const moonMesh = new THREE.Mesh(
+      celestialbodies['geometries']['moons'][moonName],
+      celestialbodies['materials']['moons'][moonName]
+    );
+    moonMesh.castShadow = true;
+    moonMesh.receiveShadow = true;
+    moonMesh.position.set(data.orbitRadius, 0, 0);
+    
+    const parentPlanetOrbitRadius = celestialbodies['data']['planets'][data.mainPlanet].orbitRadius;
+    data.pivot.position.set(parentPlanetOrbitRadius, 0, 0);
+    
+    celestialbodies['meshes']['moons'][moonName] = moonMesh;
+  }
+
+  for (const starName in celestialbodies['data']['stars']) {
+    const data = celestialbodies['data']['stars'][starName];
+    const starMesh = new THREE.Mesh(
+      celestialbodies['geometries']['stars'][starName],
+      celestialbodies['materials']['stars'][starName]
+    );
+    starMesh.position.set(0, 0, 0); 
+    celestialbodies['meshes']['stars'][starName] = starMesh;
   }
 }
 
@@ -142,7 +145,8 @@ function applyTilt() {
   // Apply tilt to moons
   for (const moonName in celestialbodies['data']['moons']) {
     const moon = celestialbodies['data']['moons'][moonName];
-    moon.pivot.rotation.x = THREE.MathUtils.degToRad(moonName.tilt);
+    const tiltRad = THREE.MathUtils.degToRad(moon.tilt); 
+    moon.pivot.rotation.x = tiltRad;
   }
 }
 
