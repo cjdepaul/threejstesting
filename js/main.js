@@ -367,9 +367,9 @@ let celestialbodies = {
     },
     planets: {
       mercury: {radius: 4.9, orbitRadius: 2000, texture: "mercury.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0059, orbitSpeed: 0.001, tilt: 7.0},
-      venus: {radius: 12.1, orbitRadius: 3700, texture: "venus.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.014, orbitSpeed: 0.000391, tilt: 3.4},
+      venus: {radius: 12.1, orbitRadius: 3700, texture: "venus.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.007, orbitSpeed: 0.000391, tilt: 3.4},
       earth: {radius: 12.7, orbitRadius: 5200, texture: "earth.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.002, orbitSpeed: 0.000241, tilt: 0},
-      mars: {radius: 6.8, orbitRadius: 7900, texture: "mars.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0097, orbitSpeed: 0.000128, tilt: 1.9},
+      mars: {radius: 6.8, orbitRadius: 7900, texture: "mars.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0017, orbitSpeed: 0.000128, tilt: 1.9},
       jupiter: {radius: 139, orbitRadius: 27000, texture: "jupiter.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.00204, orbitSpeed: 0.0000203, tilt: 1.3},
       saturn: {radius: 116, orbitRadius: 49500, texture: "saturn.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0022, orbitSpeed: 0.00000818, tilt: 2.5, ring: {innerRadius: 140, outerRadius: 270, ytilt: 0.25, texture: "saturnsrings.png"}},
       uranus: {radius: 51, orbitRadius: 99000, texture: "uranus.jpg", pivot: new THREE.Object3D(), rotationSpeed: 0.0017, orbitSpeed: 0.00000287, tilt: 97.8, ring: {innerRadius: 65, outerRadius: 102, ytilt: 2, texture: "uranusrings.png"}}, 
@@ -377,10 +377,10 @@ let celestialbodies = {
       pluto: {radius: 2.3, orbitRadius: 203000, texture: "pluto.webp", pivot: new THREE.Object3D(), rotationSpeed: 0.004, orbitSpeed: 0.0000005, tilt: 17.2},
     },
     moons: {
-      moon: {radius: 3.5, orbitRadius: 50, texture: "moon.jpg", pivot: new THREE.Object3D(), mainPlanet: "earth", rotationSpeed: 0.0059, orbitSpeed: 0.01, tilt: 5.1},
-      titan: {radius: 5, orbitRadius: 2475, texture: "titan.webp", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.00026041667, tilt: 0.3},
-      enceladus: {radius: 1, orbitRadius: 430, texture: "enceladus.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.008, tilt: 1.6},
-      mimas: {radius: 1, orbitRadius: 370, texture: "mimas.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.024, orbitSpeed: 0.01625, tilt: 0.9},
+      moon: {radius: 3.5, orbitRadius: 360, texture: "moon.jpg", pivot: new THREE.Object3D(), mainPlanet: "earth", rotationSpeed: 0.0059, orbitSpeed: 0.001, tilt: 5.1},
+      titan: {radius: 5, orbitRadius: 2475, texture: "titan.webp", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.004, orbitSpeed: 0.00026041667, tilt: 0.3},
+      enceladus: {radius: 1, orbitRadius: 430, texture: "enceladus.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.004, orbitSpeed: 0.0016, tilt: 1.6},
+      mimas: {radius: 1, orbitRadius: 370, texture: "mimas.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.004, orbitSpeed: 0.0032, tilt: 0.9},
     }
   },
   geometries: {stars: {}, planets: {}, moons: {}},
