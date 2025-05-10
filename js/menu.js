@@ -153,4 +153,24 @@ document.addEventListener('DOMContentLoaded', function() {
     sensitivitySlider.addEventListener('change', function(e) {
         updateSensitivity(parseInt(e.target.value));
     });
+
+    // Moon dropdown
+    document.querySelectorAll('.planet-header').forEach(header => {
+        header.addEventListener('click', function(e) {
+            if (e.target.closest('.button-group button')) return;
+            
+            const celestialItem = this.closest('.celestial-item');
+            const moonsContent = celestialItem.querySelector('.moons-content');
+            if (moonsContent) {
+                moonsContent.classList.toggle('show');
+            }
+        });
+    });
+
+    document.querySelectorAll('.button-group button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
+
 });
