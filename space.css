@@ -74,7 +74,7 @@ body {
 /* Menu Sections */
 .menu-section {
     border-bottom: 1px solid #444;
-    width: 325px;
+    width: 350px;
 }
 
 .menu-section:last-child {
@@ -160,7 +160,17 @@ body {
     align-items: center;
 }
 
-.celestial-item.following {
+.celestial-item.following:not(.has-moons) {
+    background-color: #1a4731;
+    border: 1px solid #2ecc71;
+}
+
+.celestial-item.has-moons.following > .planet-header {
+    background-color: #1a4731;
+    border: 1px solid #2ecc71;
+}
+
+.moon-item.following {
     background-color: #1a4731;
     border: 1px solid #2ecc71;
 }

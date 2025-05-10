@@ -71,15 +71,20 @@ document.addEventListener('DOMContentLoaded', function() {
     let followInterval = null;
 
     function updateFollowButtons() {
-        document.querySelectorAll('.celestial-item').forEach(item => {
-            const itemName = item.querySelector('.celestial-name').textContent.toLowerCase();
+        document.querySelectorAll('.celestial-item, .moon-item').forEach(item => {
+            const nameElement = item.classList.contains('has-moons') ? 
+                item.querySelector('.planet-header .celestial-name') :
+                item.querySelector('.celestial-name');
+            
+            if (!nameElement) return;
+            
+            const itemName = nameElement.textContent.toLowerCase();
             const followBtn = item.querySelector('.follow-button');
             if (followBtn) {
                 followBtn.textContent = (itemName === followingBody) ? 'Unfollow' : 'Follow';
+                item.classList.remove('following');
                 if (itemName === followingBody) {
                     item.classList.add('following');
-                } else {
-                    item.classList.remove('following');
                 }
             }
         });
