@@ -90,7 +90,7 @@ function initMeshes() {
 }
 
 function initOrbitRings() {
-  let geometry, material;
+  let geometry, material, mesh;
   material = new THREE.MeshBasicMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
   for (const celestialType in celestialbodies['data']) {
     celestialbodies['orbitRings'][celestialType] = {};
@@ -98,14 +98,17 @@ function initOrbitRings() {
       const data = celestialbodies['data'][celestialType][celestialName];
       if (celestialType === 'moons') {
         geometry = new THREE.RingGeometry(data.orbitRadius - 0.1, data.orbitRadius + 0.1, 256);
-        celestialbodies['orbitRings'][celestialType][celestialName] = new THREE.Mesh(geometry, material).rotation.set(Math.PI / 2, 0, 0);
+        mesh = new THREE.Mesh(geometry, material);
+        mesh.rotation.set(Math.PI / 2, 0, 0);
+        celestialbodies['orbitRings'][celestialType][celestialName] = mesh;
       } else if (celestialType === 'planets') {
         geometry = new THREE.RingGeometry(data.orbitRadius - 0.5, data.orbitRadius + 0.5, 256);
-        celestialbodies['orbitRings'][celestialType][celestialName] = new THREE.Mesh(geometry, material).rotation.set(Math.PI / 2, 0, 0);
+        mesh = new THREE.Mesh(geometry, material);
+        mesh.rotation.set(Math.PI / 2, 0, 0);
+        celestialbodies['orbitRings'][celestialType][celestialName] = mesh;
       }
     }
   }
-
 }
 
 function applyTilt() {
@@ -161,10 +164,10 @@ function addCelestialBodiesToScene() {
         pivot = data.pivot;
         orbitring = celestialbodies['orbitRings'][celestialType][celestialName];
         scene.add(pivot);
-        scene.add(orbitring);
+        pivot.add(orbitring);
         pivot.add(celestialbodies['meshes'][celestialType][celestialName]);
         if (celestialName.ring) {
-          pivot.add(celestialbodies['meshes'][celestialType][`${celestialName}Ring`]);
+          clestialbodies['meshes'][celestialType][celestialName].add(celestialbodies['meshes'][celestialType][`${celestialName}Ring`]);
         }
       }
       else if (celestialType === 'moons') {
@@ -325,7 +328,7 @@ document.addEventListener('keydown', (event) => {
 
 // container of celestial bodies
 
-const celestialbodies = {
+let celestialbodies = {
   data: {
     stars: {
       sun: {radius: 1390, texture: "sun.jpg", rotationSpeed: 0.001},
@@ -436,7 +439,7 @@ animate();
 renderer.render(scene, camera);
 
 
-let celestialBodies;
+let celestialBodies = {};
 function initCelestialBodiesExport() {
   for (const celestialType in celestialbodies['meshes']) {
     for (const celestialName in celestialbodies['meshes'][celestialType]) {
