@@ -24,11 +24,11 @@ function initGeometries() {
             ringGeometry.attributes.uv.setXY(i, u, v);
             celestialbodies['geometries'][celestialType][celestialName].ring = ringGeometry;
         }
+      }
       } else if (celestialType === 'stars') {
         celestialbodies['geometries'][celestialType][celestialName] = new THREE.SphereGeometry(data.radius, 32, 32);
       }
     }
-    } 
   }
 }
 
@@ -42,7 +42,8 @@ function initMaterials() {
       } else if (celestialType === 'planets') {
         celestialbodies['materials'][celestialType][celestialName] = new THREE.MeshPhysicalMaterial({map: new THREE.TextureLoader().load(`images/textures/${data.texture}`)});
         if (data.ring) {
-          celestialbodies['materials'][celestialType][celestialName].ring = new THREE.MeshPhysicalMaterial({
+          // Create ring material with proper name
+          celestialbodies['materials'][celestialType][`${celestialName}Ring`] = new THREE.MeshPhysicalMaterial({
             map: new THREE.TextureLoader().load(`images/textures/${data.ring.texture}`),
             side: THREE.DoubleSide,
             transparent: true
@@ -56,35 +57,51 @@ function initMaterials() {
 }
 
 function initMeshes() {
-  let moonMesh, planetMesh, ringMesh, moonpivot;
+  let moonMesh, planetMesh, ringMesh, starMesh;
   for (const celestialType in celestialbodies['data']) {
     celestialbodies['meshes'][celestialType] = {};
     for (const celestialName in celestialbodies['data'][celestialType]) {
       const data = celestialbodies['data'][celestialType][celestialName];
       if (celestialType === 'moons') {
-        moonMesh = new THREE.Mesh(celestialbodies['geometries'][celestialType][celestialName], celestialbodies['materials'][celestialType][celestialName]);
+        moonMesh = new THREE.Mesh(
+          celestialbodies['geometries'][celestialType][celestialName],
+          celestialbodies['materials'][celestialType][celestialName]
+        );
         moonMesh.castShadow = true;
         moonMesh.receiveShadow = true;
         moonMesh.position.set(data.orbitRadius, 0, 0);
+        data.pivot.position.set(celestialbodies['meshes']['planets'][data.mainPlanet].orbitRadius, 0, 0)
         celestialbodies['meshes'][celestialType][celestialName] = moonMesh;
-        data.pivot.position.set(celestialbodies['data'][data.mainPlanet.position]);
       } else if (celestialType === 'planets') {
-        planetMesh = new THREE.Mesh(celestialbodies['geometries'][celestialType][celestialName], celestialbodies['materials'][celestialType][celestialName]);
+        planetMesh = new THREE.Mesh(
+          celestialbodies['geometries'][celestialType][celestialName],
+          celestialbodies['materials'][celestialType][celestialName]
+        );
         planetMesh.castShadow = true;
         planetMesh.receiveShadow = true;
         planetMesh.position.set(data.orbitRadius, 0, 0);
         celestialbodies['meshes'][celestialType][celestialName] = planetMesh;
+        
         if (data.ring) {
-          ringMesh = new THREE.Mesh(celestialbodies['geometries'][celestialType][celestialName].ring, celestialbodies['materials'][celestialType][`${celestialName}Ring`]);
+          ringMesh = new THREE.Mesh(
+            celestialbodies['geometries'][celestialType][celestialName].ring,
+            celestialbodies['materials'][celestialType][`${celestialName}Ring`]
+          );
           ringMesh.rotation.x = Math.PI / 2;
-          ringMesh.position.set(data.orbitRadius, 0, 0);
+          ringMesh.rotation.y = data.ring.ytilt;
+          ringMesh.position.set(0, 0, 0);
           ringMesh.castShadow = true;
           ringMesh.receiveShadow = true;
           celestialbodies['meshes'][celestialType][`${celestialName}Ring`] = ringMesh;
         }
       } else if (celestialType === 'stars') {
-        celestialbodies['meshes'][celestialType][celestialName] = new THREE.Mesh(celestialbodies['geometries'][celestialType][celestialName], celestialbodies['materials'][celestialType][celestialName]);
-      }
+        starMesh = new THREE.Mesh(
+          celestialbodies['geometries'][celestialType][celestialName],
+          celestialbodies['materials'][celestialType][celestialName]
+        );
+        starMesh.position.set(0, 0, 0); 
+        celestialbodies['meshes'][celestialType][celestialName] = starMesh;
+      } 
     }
   }
 }
@@ -166,20 +183,21 @@ function addCelestialBodiesToScene() {
         scene.add(pivot);
         pivot.add(orbitring);
         pivot.add(celestialbodies['meshes'][celestialType][celestialName]);
-        if (celestialName.ring) {
-          clestialbodies['meshes'][celestialType][celestialName].add(celestialbodies['meshes'][celestialType][`${celestialName}Ring`]);
+        if (data.ring) {
+          celestialbodies['meshes'][celestialType][celestialName].add(celestialbodies['meshes'][celestialType][`${celestialName}Ring`]);
         }
-      }
-      else if (celestialType === 'moons') {
+      } else if (celestialType === 'moons') {
         pivot = data.pivot;
         orbitring = celestialbodies['orbitRings'][celestialType][celestialName];
         data.pivot.add(celestialbodies['meshes'][celestialType][celestialName]);
         data.pivot.add(orbitring);
         celestialbodies['data']['planets'][data.mainPlanet].pivot.add(data.pivot);
-      }
-      else if (celestialType === 'stars') {
-        scene.add(celestialbodies['meshes'][celestialType][celestialName]);
-      }
+      } else if (celestialType === 'stars') {
+        const starMesh = celestialbodies['meshes'][celestialType][celestialName];
+        if (starMesh) {
+          scene.add(starMesh);
+        }
+      } 
     }
   }
 }
