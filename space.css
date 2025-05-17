@@ -117,6 +117,10 @@ body {
     gap: 10px;
 }
 
+.slider-container input{
+    width: 100%;
+}
+
 .slider-value {
     min-width: 30px;
     color: white;
