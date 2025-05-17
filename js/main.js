@@ -389,6 +389,13 @@ let celestialbodies = {
       rhea: {radius: 2, orbitRadius: 800, texture: "rhea.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.001, orbitSpeed: 0.0004, tilt: 0.3},
       titan: {radius: 5, orbitRadius: 2475, texture: "titan.webp", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.004, orbitSpeed: 0.00026041667, tilt: 0.3},
       iapetus: {radius: 1.75, orbitRadius: 6000, texture: "iapetus.jpg", pivot: new THREE.Object3D(), mainPlanet: "saturn", rotationSpeed: 0.003, orbitSpeed: 0.0002, tilt: 15.5}, 
+      titania: {radius: 4, orbitRadius: 450, texture: "titania.jpg", pivot: new THREE.Object3D(), mainPlanet: "uranus", rotationSpeed: 0.0015, orbitSpeed: 0.0015, tilt: 0.1},
+      oberon: {radius: 3.8, orbitRadius: 600, texture: "oberon.jpg", pivot: new THREE.Object3D(), mainPlanet: "uranus", rotationSpeed: 0.001, orbitSpeed: 0.001, tilt: 0.1},
+      umbriel: {radius: 2.9, orbitRadius: 300, texture: "umbriel.jpg", pivot: new THREE.Object3D(), mainPlanet: "uranus", rotationSpeed: 0.002, orbitSpeed: 0.002, tilt: 0.1},
+      ariel: {radius: 2.9, orbitRadius: 200, texture: "ariel.jpg", pivot: new THREE.Object3D(), mainPlanet: "uranus", rotationSpeed: 0.0025, orbitSpeed: 0.0025, tilt: 0.1},
+      miranda: {radius: 1.2, orbitRadius: 150, texture: "miranda.jpg", pivot: new THREE.Object3D(), mainPlanet: "uranus", rotationSpeed: 0.003, orbitSpeed: 0.003, tilt: 0.1},
+      triton: {radius: 6.8, orbitRadius: 800, texture: "triton.jpg", pivot: new THREE.Object3D(), mainPlanet: "neptune", rotationSpeed: 0.001, orbitSpeed: -0.001, tilt: 157},
+      charon: {radius: 1.2, orbitRadius: 200, texture: "charon.jpg", pivot: new THREE.Object3D(), mainPlanet: "pluto", rotationSpeed: 0.001, orbitSpeed: 0.001, tilt: 0.1},  
     }
   },
   geometries: {stars: {}, planets: {}, moons: {}},
