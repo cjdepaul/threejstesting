@@ -133,6 +133,7 @@ body {
 #celestialBodiesContent {
     max-height: 600px; 
     overflow-y: auto;
+    overflow-x: hidden;
     scrollbar-width: thin; 
     scrollbar-color: #444 #222;
 }
