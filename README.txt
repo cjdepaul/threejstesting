@@ -3,7 +3,7 @@ I will probably just create branches with different creations.
 
 First project is a working solar system simulation with basic planets to learn the basics
 
-Solar System Sim (WIP):
+Solar System Sim:
 To move use wasd to move forward, backwards, left, and right
 To move up and down use space bar and shift 
 To change where the you are looking click and drag
